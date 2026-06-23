@@ -487,6 +487,238 @@ h4 {
   margin-top: 30px;
 }
 
+.showcase-hero {
+  min-height: calc(100vh - 67px);
+  padding: 88px 0 0;
+  color: #fff;
+  background:
+    linear-gradient(180deg, #020403 0%, #07100d 52%, #101914 100%);
+  border-bottom: 0;
+}
+
+.showcase-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 76px 76px;
+  opacity: 0.42;
+}
+
+.showcase-hero-content {
+  width: min(1180px, calc(100% - 40px));
+  text-align: center;
+}
+
+.showcase-copy {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+}
+
+.showcase-copy .eyebrow {
+  color: #f4cf84;
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.showcase-copy h1 {
+  max-width: 1000px;
+  color: #fff;
+  font-size: 66px;
+}
+
+.showcase-copy .hero-text {
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.showcase-copy .btn.primary {
+  color: var(--navy);
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(255, 255, 255, 0.12);
+}
+
+.showcase-copy .btn.secondary {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.template-showcase {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin-top: 54px;
+  padding-bottom: 34px;
+  overflow: hidden;
+}
+
+.template-showcase::before {
+  content: "";
+  position: absolute;
+  inset: -8px 0 auto;
+  height: 76px;
+  background: linear-gradient(180deg, rgba(7, 16, 13, 0.98), rgba(7, 16, 13, 0));
+  z-index: 2;
+  pointer-events: none;
+}
+
+.showcase-track {
+  width: max-content;
+  display: grid;
+  grid-template-columns: repeat(4, 340px);
+  gap: 20px;
+  margin: 0 auto;
+}
+
+.showcase-track-top {
+  transform: translateX(0);
+}
+
+.showcase-track-bottom {
+  margin-top: 20px;
+  transform: translateX(72px);
+}
+
+.showcase-card {
+  height: 244px;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  color: var(--ink);
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+}
+
+.showcase-card-nav,
+.showcase-card-footer {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.showcase-card-nav span,
+.showcase-card-footer span:last-child {
+  color: rgba(20, 32, 28, 0.58);
+}
+
+.showcase-card-body {
+  display: grid;
+  grid-template-columns: 1fr 0.72fr;
+  align-items: stretch;
+  gap: 14px;
+  padding: 16px;
+}
+
+.showcase-card-body p {
+  color: rgba(20, 32, 28, 0.62);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.showcase-card-body h3 {
+  margin-top: 8px;
+  font-size: 27px;
+  line-height: 1.04;
+}
+
+.showcase-art {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.showcase-art span {
+  border-radius: 8px;
+  background: rgba(20, 32, 28, 0.1);
+}
+
+.showcase-art span:first-child {
+  min-height: 74px;
+}
+
+.showcase-art span:nth-child(2),
+.showcase-art span:nth-child(3) {
+  min-height: 34px;
+}
+
+.site-tech {
+  color: #eefbf6;
+  background: linear-gradient(135deg, #07100d, #144d43);
+}
+
+.site-event {
+  color: #fff;
+  background: linear-gradient(135deg, #25113e, #d33a75 58%, #ff9f2f);
+}
+
+.site-service {
+  background: linear-gradient(135deg, #f8f5ed, #dfe8e0);
+}
+
+.site-clean {
+  background: linear-gradient(135deg, #fffdf8, #e9f3ee);
+}
+
+.site-contractor {
+  color: #fff;
+  background: linear-gradient(135deg, #18242a, #65614f);
+}
+
+.site-platform {
+  color: #fff;
+  background: linear-gradient(135deg, #101827, #315f7a);
+}
+
+.site-luxury {
+  background: linear-gradient(135deg, #f8efe4, #d7c1a5);
+}
+
+.site-restaurant {
+  color: #fff;
+  background: linear-gradient(135deg, #153f36, #bc6337);
+}
+
+.site-tech .showcase-card-nav span,
+.site-tech .showcase-card-footer span:last-child,
+.site-tech .showcase-card-body p,
+.site-event .showcase-card-nav span,
+.site-event .showcase-card-footer span:last-child,
+.site-event .showcase-card-body p,
+.site-contractor .showcase-card-nav span,
+.site-contractor .showcase-card-footer span:last-child,
+.site-contractor .showcase-card-body p,
+.site-platform .showcase-card-nav span,
+.site-platform .showcase-card-footer span:last-child,
+.site-platform .showcase-card-body p,
+.site-restaurant .showcase-card-nav span,
+.site-restaurant .showcase-card-footer span:last-child,
+.site-restaurant .showcase-card-body p {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.site-tech .showcase-art span,
+.site-event .showcase-art span,
+.site-contractor .showcase-art span,
+.site-platform .showcase-art span,
+.site-restaurant .showcase-art span {
+  background: rgba(255, 255, 255, 0.18);
+}
+
 .section-head {
   display: flex;
   align-items: end;
@@ -2981,6 +3213,14 @@ h4 {
     display: none;
   }
 
+  .showcase-copy h1 {
+    font-size: 56px;
+  }
+
+  .showcase-track {
+    grid-template-columns: repeat(4, 320px);
+  }
+
   .comparison-row,
   .tier-grid,
   .portfolio-card,
@@ -3064,6 +3304,39 @@ h4 {
 
   .hero-window-mobile {
     display: none;
+  }
+
+  .showcase-hero {
+    min-height: 0;
+    padding-top: 64px;
+  }
+
+  .showcase-copy h1 {
+    font-size: 42px;
+  }
+
+  .showcase-copy .hero-text {
+    font-size: 16px;
+  }
+
+  .template-showcase {
+    margin-top: 38px;
+    padding-bottom: 22px;
+  }
+
+  .showcase-track {
+    width: min(100% - 28px, 460px);
+    grid-template-columns: 1fr;
+    transform: none;
+  }
+
+  .showcase-track-bottom {
+    display: none;
+  }
+
+  .showcase-card {
+    height: auto;
+    min-height: 230px;
   }
 
   h1 {
@@ -3298,6 +3571,32 @@ h4 {
 
   .hero-section {
     padding-top: 70px;
+  }
+
+  .showcase-hero {
+    padding-top: 50px;
+  }
+
+  .showcase-copy h1 {
+    font-size: 35px;
+  }
+
+  .showcase-card-body {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase-card-body h3 {
+    font-size: 24px;
+  }
+
+  .showcase-art {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .showcase-art span:first-child,
+  .showcase-art span:nth-child(2),
+  .showcase-art span:nth-child(3) {
+    min-height: 44px;
   }
 
   .package-card,

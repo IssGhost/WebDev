@@ -303,6 +303,73 @@ const packageComparison = [
   ["Pro", "Business system", "Portals, dashboards, payments, records, uploads, and workflows."]
 ];
 
+const heroShowcaseSites = [
+  {
+    brand: "VoltEdge",
+    category: "Tech / Product",
+    headline: "Fleet-ready EV charging installs",
+    proof: "Commercial infrastructure",
+    cta: "Plan install",
+    theme: "site-tech"
+  },
+  {
+    brand: "NovaPulse",
+    category: "Event / Registration",
+    headline: "Color run registration funnel",
+    proof: "Countdown and city cards",
+    cta: "Register now",
+    theme: "site-event"
+  },
+  {
+    brand: "Barrow & Co.",
+    category: "Professional Service",
+    headline: "Independent advice for Texas families",
+    proof: "Trust badges and quote flow",
+    cta: "Request review",
+    theme: "site-service"
+  },
+  {
+    brand: "Spark & Shine",
+    category: "Local Business",
+    headline: "Mobile detailing that books fast",
+    proof: "Reviews, FAQ, click-to-call",
+    cta: "Get quote",
+    theme: "site-clean"
+  },
+  {
+    brand: "Iron Ridge",
+    category: "Contractor",
+    headline: "Exterior repair quotes made clear",
+    proof: "Gallery and service pages",
+    cta: "Request estimate",
+    theme: "site-contractor"
+  },
+  {
+    brand: "Apex Portal",
+    category: "Web App",
+    headline: "Client dashboard and payments",
+    proof: "Portal, uploads, status tracking",
+    cta: "Open portal",
+    theme: "site-platform"
+  },
+  {
+    brand: "Luxe Bloom",
+    category: "Premium Brand",
+    headline: "Consultation-first med spa design",
+    proof: "Elegant proof and booking",
+    cta: "Book consult",
+    theme: "site-luxury"
+  },
+  {
+    brand: "Harvest Table",
+    category: "Restaurant",
+    headline: "Reservations, menus, and events",
+    proof: "Photo-heavy dining page",
+    cta: "Reserve table",
+    theme: "site-restaurant"
+  }
+];
+
 const wordpressStyleCards = [
   {
     title: "Modern Product / Tech",
@@ -470,43 +537,13 @@ function HomePage() {
 }
 
 function Hero() {
-  return (
-    <section className="hero-section">
-      <div className="hero-visual" aria-hidden="true">
-        <div className="hero-window hero-window-main">
-          <div className="window-bar"><span /><span /><span /></div>
-          <div className="hero-window-content">
-            <div className="visual-nav"><b>Service Co.</b><i>Services</i><i>Reviews</i><i>Quote</i></div>
-            <div className="visual-hero">
-              <p>Local business website</p>
-              <strong>Clean pages. Clear calls. Better leads.</strong>
-            </div>
-            <div className="visual-grid">
-              <span>Services</span>
-              <span>Booking</span>
-              <span>Payments</span>
-              <span>Reviews</span>
-            </div>
-          </div>
-        </div>
-        <div className="hero-window hero-window-side">
-          <div className="metric-pill"><BarChart3 size={17} /> Quote estimate</div>
-          <div className="mini-dashboard">
-            <span><strong>18</strong> new leads</span>
-            <span><strong>$2.1k</strong> deposits</span>
-            <span><strong>7</strong> uploads</span>
-          </div>
-        </div>
-        <div className="hero-window hero-window-mobile">
-          <div className="phone-top" />
-          <strong>Book service</strong>
-          <span>Today, 3:30 PM</span>
-          <button>Request quote</button>
-        </div>
-      </div>
+  const firstRow = heroShowcaseSites.slice(0, 4);
+  const secondRow = heroShowcaseSites.slice(4);
 
-      <div className="hero-content">
-        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+  return (
+    <section className="hero-section showcase-hero">
+      <div className="hero-content showcase-hero-content">
+        <motion.div className="showcase-copy" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <p className="eyebrow"><BadgeCheck size={16} /> Website packages for real small businesses</p>
           <h1>Websites that help businesses get found, trusted, and contacted.</h1>
           <p className="hero-text">
@@ -518,7 +555,41 @@ function Hero() {
           </div>
         </motion.div>
       </div>
+      <div className="template-showcase" aria-label="Example website styles LaunchLine Studio can create">
+        <div className="showcase-track showcase-track-top">
+          {firstRow.map((site) => <HeroShowcaseCard site={site} key={site.brand} />)}
+        </div>
+        <div className="showcase-track showcase-track-bottom">
+          {secondRow.map((site) => <HeroShowcaseCard site={site} key={site.brand} />)}
+        </div>
+      </div>
     </section>
+  );
+}
+
+function HeroShowcaseCard({ site }) {
+  return (
+    <article className={`showcase-card ${site.theme}`}>
+      <div className="showcase-card-nav">
+        <strong>{site.brand}</strong>
+        <span>{site.category}</span>
+      </div>
+      <div className="showcase-card-body">
+        <div>
+          <p>{site.proof}</p>
+          <h3>{site.headline}</h3>
+        </div>
+        <div className="showcase-art" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
+      </div>
+      <div className="showcase-card-footer">
+        <span>{site.cta}</span>
+        <span>Live preview</span>
+      </div>
+    </article>
   );
 }
 
