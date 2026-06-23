@@ -1288,7 +1288,6 @@ function WordPressSitesPage() {
               Some businesses need more than a clean website - they need a site with a bold visual style, custom sections, motion, brand personality, and a layout that feels built specifically for their industry.
             </p>
             <p className="wordpress-hero-copy">
-              This option is for clients who want a more customized, modern, WordPress-style website experience with premium visuals, custom layouts, photo-heavy sections, animated elements, and brand-focused design. The site can still be built with React/Vite unless the client specifically wants WordPress or a WordPress-compatible handoff.
             </p>
             <div className="hero-actions">
               <a className="btn primary" href="#website-styles">Explore Website Styles <ArrowRight size={18} /></a>
@@ -1340,7 +1339,6 @@ function WebsiteStyleChoices() {
           <h2>Custom visual direction for businesses that need more brand personality.</h2>
         </div>
         <p>
-          These styles can be used for React/Vite builds, WordPress-compatible builds if requested, or custom modern website designs that feel closer to premium theme work.
         </p>
       </div>
       <div className="wordpress-style-grid">
@@ -1375,7 +1373,6 @@ function UltraCustomWordPressDemo() {
           <h2>Clickable style previews show how premium visual design changes the feel of a website.</h2>
         </div>
         <p>
-          This is what a more custom, premium, WordPress-style website could feel like compared to a standard business website.
         </p>
       </div>
 
