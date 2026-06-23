@@ -9,6 +9,7 @@ import {
   CalendarDays,
   Check,
   ChevronRight,
+  ClipboardCheck,
   Code2,
   CreditCard,
   Crown,
@@ -17,20 +18,25 @@ import {
   FileText,
   FolderKanban,
   Globe2,
+  Hammer,
   Home,
   Image,
   LayoutDashboard,
   LayoutTemplate,
   LifeBuoy,
   Mail,
+  MapPin,
   Menu,
   MessageSquareText,
   MousePointerClick,
   Paintbrush,
+  Phone,
   Rocket,
   Search,
+  Send,
   Server,
   ShieldCheck,
+  Sparkles,
   Star,
   Store,
   UploadCloud,
@@ -49,189 +55,275 @@ const tiers = {
   beginner: {
     slug: "beginner",
     name: "Beginner",
-    label: "Professional one-page site",
-    price: 499,
+    label: "Clean one-page website",
+    basePrice: 499,
     priceText: "$499+",
-    timeline: "3–5 days",
+    timeline: "3-5 days",
     icon: LayoutTemplate,
-    sampleBusiness: "BrightStart Mobile Detailing",
-    headline: "A polished one-page website that makes your business look legitimate and easy to contact.",
-    short: "Best for businesses that need a clean online presence, service explanation, trust signals, and direct contact options.",
-    goal: "Look professional and turn visitors into calls, emails, or quote requests.",
-    ideal: "New businesses, solo services, simple local businesses, portfolios, and anyone who needs a credible link fast.",
-    notIdeal: "Projects needing accounts, payments, admin dashboards, automated workflows, or heavy custom features.",
-    sections: ["Hero", "Services", "About", "Reviews", "FAQ", "Contact"],
-    includes: ["Responsive one-page design", "Clear service overview", "Trust/review section", "FAQ", "Contact form or click-to-call", "Basic SEO title/description"],
-    limits: ["No login area", "No database records", "No admin dashboard", "No automated booking/payment workflow unless added"]
+    sampleBusiness: "Spark & Shine Mobile Detailing",
+    promise: "A polished one-page site that helps a local business look legitimate and turn visitors into calls, texts, or quote requests.",
+    bestFor: "New businesses, solo services, portfolios, and local companies that need a credible online presence fast.",
+    notFor: "Accounts, payments, private dashboards, database workflows, or heavy automation unless those features are added.",
+    cta: "View Beginner Demo",
+    purpose: "I need a clean site that makes my business look professional and gets people to contact me.",
+    includes: [
+      "Responsive one-page layout",
+      "Hero, services, about, reviews, FAQ, and contact sections",
+      "Click-to-call button",
+      "Simple quote/contact form",
+      "Basic SEO title and page description",
+      "No login, payments, admin dashboard, or database workflow by default"
+    ]
   },
   intermediate: {
     slug: "intermediate",
     name: "Intermediate",
     label: "Multi-page business website",
-    price: 999,
+    basePrice: 999,
     priceText: "$999+",
-    timeline: "1–2 weeks",
+    timeline: "1-2 weeks",
     icon: Rocket,
-    sampleBusiness: "Iron Ridge Contractors",
-    headline: "A complete business website built to explain services, show proof, and capture better leads.",
-    short: "Best for businesses that need multiple pages, stronger service explanations, galleries, reviews, and a more serious lead flow.",
-    goal: "Help customers understand your services and feel confident enough to request a quote.",
-    ideal: "Contractors, restaurants, gyms, med spas, cleaning companies, landscapers, coaching businesses, and service companies.",
-    notIdeal: "Businesses needing a full customer portal, custom admin system, payment workflow, or software-style platform by default.",
-    sections: ["Home", "Services", "Gallery", "Process", "Reviews", "Quote"],
-    includes: ["3–6 responsive pages", "Dedicated service pages", "Gallery or portfolio", "Testimonials", "Lead form", "SEO-friendly page structure"],
-    limits: ["No full app dashboard by default", "No customer login by default", "Payments/bookings are add-ons", "Complex automations require Pro/custom quote"]
+    sampleBusiness: "Iron Ridge Home Services",
+    promise: "A complete business website with stronger service pages, proof, project examples, FAQs, and a better lead flow.",
+    bestFor: "Contractors, septic companies, med spas, gyms, restaurants, landscapers, coaches, and service businesses with more to explain.",
+    notFor: "Businesses that need customer accounts, staff tools, or app-style workflows as the core product.",
+    cta: "View Intermediate Demo",
+    purpose: "I need more than a landing page. I need a real business website that explains my services and generates better leads.",
+    includes: [
+      "Homepage plus multiple service pages",
+      "Gallery or portfolio section",
+      "Testimonials, process, FAQ, and lead form",
+      "Service-area or SEO page examples",
+      "Stronger conversion layout",
+      "Booking, payments, and saved lead workflows available as add-ons"
+    ]
   },
   pro: {
     slug: "pro",
     name: "Pro",
-    label: "Custom web platform",
-    price: 1999,
+    label: "Custom web app or platform",
+    basePrice: 1999,
     priceText: "$1,999+",
-    timeline: "2–5 weeks",
+    timeline: "2-5 weeks",
     icon: Crown,
-    sampleBusiness: "Apex Coaching Portal",
-    headline: "A website that can run part of the business with portals, dashboards, payments, uploads, and workflows.",
-    short: "Best when the website needs to do actual business operations, not just display information.",
-    goal: "Turn your website into a system customers, staff, coaches, or admins can use.",
-    ideal: "Coaching platforms, booking businesses, marketplaces, service businesses with quotes, customer portals, and workflow-heavy operations.",
-    notIdeal: "Simple brochure websites that only need information pages and contact buttons.",
-    sections: ["Portal", "Requests", "Payments", "Uploads", "Admin", "Reports"],
-    includes: ["Frontend + backend", "User accounts", "Role dashboards", "Payments or quotes", "Database records", "Notifications/statuses"],
-    limits: ["Third-party fees separate", "Unscoped integrations need review", "Hosting/support require a plan", "Future features quoted separately"]
+    sampleBusiness: "Apex Performance Portal",
+    promise: "A business platform with customer accounts, dashboards, payments, uploads, requests, notifications, and management tools.",
+    bestFor: "Coaching portals, booking platforms, contractor client portals, training systems, marketplaces, and workflow-heavy service businesses.",
+    notFor: "Simple brochure websites that only need information pages and a contact button.",
+    cta: "View Pro Demo",
+    purpose: "I need my website to run part of my business, not just display information.",
+    includes: [
+      "Login and customer portal screens",
+      "Admin dashboard and management buttons",
+      "Request, booking, quote, or payment workflows",
+      "Uploads, notifications, and status tracking",
+      "Database-style records table",
+      "Scope review required for integrations and complex dashboards"
+    ]
   }
 };
+
+const tierOrder = [tiers.beginner, tiers.intermediate, tiers.pro];
 
 const addOns = [
   {
     key: "booking",
-    label: "Booking / Scheduling",
+    name: "Booking / Scheduling",
+    shortName: "Booking",
     price: 300,
     icon: CalendarDays,
-    plain: "Let customers request appointments, inspections, lessons, calls, or service windows without endless texting.",
-    technical: "Adds service selection, date/time preference, customer info fields, and confirmation/status UI.",
-    steps: ["Choose a service", "Pick a date", "Request confirmed"]
+    business: "Let customers request appointments, inspections, lessons, calls, or service windows without a long back-and-forth.",
+    technical: "Adds service selection, date or time preference fields, confirmation states, and a request summary that can connect to email or a backend workflow.",
+    steps: ["Choose service", "Pick a time", "Request confirmed"],
+    effects: {
+      beginner: "Adds a schedule appointment call-to-action and a compact service request section.",
+      intermediate: "Adds a dedicated booking tab with project type, preferred date, and contact details.",
+      pro: "Adds request scheduling, assignment status, appointment history, and admin follow-up actions."
+    }
   },
   {
     key: "payments",
-    label: "Payments / Deposits",
+    name: "Payments / Deposits",
+    shortName: "Payments",
     price: 350,
     icon: WalletCards,
-    plain: "Collect deposits, invoices, quote payments, or checkout payments directly through the site.",
-    technical: "Adds Stripe-style checkout, itemized totals, paid/unpaid states, and receipt/status UI.",
-    steps: ["Review total", "Pay deposit", "Receipt sent"]
+    business: "Collect deposits, invoices, quote payments, or checkout payments directly through the website.",
+    technical: "Adds checkout-ready screens, itemized totals, paid/unpaid states, receipt messaging, and integration space for providers like Stripe.",
+    steps: ["Review total", "Pay deposit", "Receipt saved"],
+    effects: {
+      beginner: "Adds a pay deposit section for simple services or appointment holds.",
+      intermediate: "Adds estimate deposit or invoice payment panels to the lead flow.",
+      pro: "Adds invoice status, checkout preview, payment history, and admin controls."
+    }
   },
   {
     key: "portal",
-    label: "Customer Portal",
+    name: "Customer Portal",
+    shortName: "Portal",
     price: 500,
     icon: UserRound,
-    plain: "Give customers a place to log in, view their history, manage requests, and track progress.",
-    technical: "Adds account screens, saved requests, profile details, progress cards, and private customer views.",
-    steps: ["Login", "View request history", "Track progress"]
+    business: "Give customers a private place to log in, view requests, update details, and track progress.",
+    technical: "Adds account screens, saved request history, profile fields, private routing, and role-aware customer views.",
+    steps: ["Sign in", "View history", "Track progress"],
+    effects: {
+      beginner: "Adds a small account-access concept, usually better suited for a Pro build.",
+      intermediate: "Adds a customer account preview next to the quote flow.",
+      pro: "Adds full customer dashboard tabs, profile details, request history, and saved documents."
+    }
   },
   {
     key: "admin",
-    label: "Admin Dashboard",
+    name: "Admin Dashboard",
+    shortName: "Admin",
     price: 650,
     icon: LayoutDashboard,
-    plain: "Manage leads, orders, quotes, bookings, customers, content, or submissions from one private area.",
-    technical: "Adds private management screens, tables, status controls, metrics, and action buttons.",
-    steps: ["View leads", "Update status", "Manage customer"]
+    business: "Manage business activity from one private dashboard instead of hunting through emails, texts, and spreadsheets.",
+    technical: "Adds private management screens, status controls, metrics, tables, and action buttons for the business owner or staff.",
+    steps: ["View activity", "Update status", "Send follow-up"],
+    effects: {
+      beginner: "Adds a private owner view concept for incoming form requests.",
+      intermediate: "Adds a lead manager preview with quote statuses and next actions.",
+      pro: "Adds a complete admin dashboard with metrics, records, workflow buttons, and team-facing tools."
+    }
   },
   {
     key: "database",
-    label: "Database Workflows",
+    name: "Saved Customer Requests",
+    shortName: "Records",
     price: 500,
     icon: Database,
-    plain: "Store customer requests, orders, uploads, messages, and statuses so nothing gets lost.",
-    technical: "Adds database-backed records, saved states, customer activity, and workflow history.",
-    steps: ["Save record", "Update status", "Retrieve history"]
+    business: "Store customer requests, orders, uploads, and messages so nothing gets lost.",
+    technical: "Adds database-backed records, saved states, request IDs, activity history, and structured retrieval for admin or customer screens.",
+    steps: ["Save request", "Update status", "Find history"],
+    effects: {
+      beginner: "Stores form submissions instead of only sending an email.",
+      intermediate: "Adds a submitted lead list with names, services, status, and follow-up priority.",
+      pro: "Adds searchable records for customers, requests, payments, uploads, and status changes."
+    }
   },
   {
     key: "uploads",
-    label: "File / PDF / Video Uploads",
+    name: "File / PDF / Video Uploads",
+    shortName: "Uploads",
     price: 450,
     icon: UploadCloud,
-    plain: "Let customers submit photos, PDFs, documents, forms, videos, or project materials.",
-    technical: "Adds upload UI, file type handling, status indicators, and admin/customer review states.",
-    steps: ["Drop file", "Upload complete", "Admin notified"]
+    business: "Let customers send photos, PDFs, documents, videos, forms, or project materials through the site.",
+    technical: "Adds upload fields, accepted file states, progress messaging, storage planning, and admin/customer review states.",
+    steps: ["Attach file", "Upload complete", "Ready for review"],
+    effects: {
+      beginner: "Adds a simple send photos or documents field to the quote form.",
+      intermediate: "Adds project photo upload inside the request quote workflow.",
+      pro: "Adds file submission areas, review status, file history, and admin download actions."
+    }
   },
   {
     key: "notifications",
-    label: "Notifications",
+    name: "Notifications",
+    shortName: "Alerts",
     price: 300,
     icon: Bell,
-    plain: "Alert customers or admins when messages, requests, payments, uploads, or status changes happen.",
-    technical: "Adds badges, unread states, activity feeds, alert cards, and status messaging.",
-    steps: ["New activity", "Badge appears", "Open alert"]
+    business: "Alert customers or admins when new leads, messages, payments, uploads, or status changes happen.",
+    technical: "Adds alert badges, activity feed entries, unread states, status messages, and email/SMS-ready event hooks.",
+    steps: ["New activity", "Badge appears", "Follow-up sent"],
+    effects: {
+      beginner: "Shows form or quote alerts, useful when connected to a real form workflow.",
+      intermediate: "Adds a new lead received alert and follow-up reminder.",
+      pro: "Adds notification badge, customer activity feed, admin alerts, and status-change messages."
+    }
   },
   {
     key: "seo",
-    label: "Extra SEO Pages",
+    name: "Extra SEO Pages",
+    shortName: "SEO Pages",
     price: 250,
     icon: Search,
-    plain: "Add service or location pages so customers can better find and understand specific offerings.",
-    technical: "Adds structured service/location pages, headings, page metadata, and search-focused content sections.",
-    steps: ["Service page", "Location page", "Search-ready copy"]
+    business: "Add service or location pages so customers can find and understand specific offerings.",
+    technical: "Adds structured page content, metadata, headings, internal links, and search-focused sections for services or locations.",
+    steps: ["Choose topic", "Add local copy", "Publish page"],
+    effects: {
+      beginner: "Adds a small set of service or location tabs to support search visibility.",
+      intermediate: "Adds dedicated service-area and location page examples.",
+      pro: "Adds public marketing/service pages in addition to the private app."
+    }
   },
   {
     key: "integrations",
-    label: "Custom Integrations*",
+    name: "Custom Integrations*",
+    shortName: "Integrations*",
     price: 750,
     icon: Workflow,
-    plain: "Connect the site to tools your business already uses, such as email, CRM, maps, APIs, or automations.",
-    technical: "Adds third-party API connections, sync states, automation steps, and custom workflow logic.",
-    steps: ["Connect tool", "Sync data", "Automation runs"]
+    business: "Connect the website to tools your business already uses, such as email, CRM, maps, forms, APIs, calendars, or automations.",
+    technical: "Adds third-party API connections, sync states, credentials planning, error states, automation steps, and custom workflow logic.",
+    steps: ["Connect tool", "Sync data", "Automation runs"],
+    effects: {
+      beginner: "Adds lightweight handoff to an email, form, CRM, or calendar tool when the scope is simple.",
+      intermediate: "Adds CRM, map, calendar, or lead-routing integrations to the site workflow.",
+      pro: "Adds connected tools, automated events, sync status, and workflow history."
+    }
   }
 ];
+
+const hostingOptions = {
+  managed: {
+    label: "Managed Hosting & Maintenance",
+    monthly: 99,
+    short: "Hands-off monthly support",
+    description: "For clients who prefer a hands-off experience, I provide ongoing hosting, deployment support, monitoring, maintenance, and technical assistance for a monthly service fee."
+  },
+  handoff: {
+    label: "Self-Hosted File Handoff",
+    monthly: 0,
+    short: "Client-owned hosting",
+    description: "Clients who prefer to manage their own hosting receive the completed project files, assets, and basic deployment instructions after launch."
+  }
+};
 
 const portfolio = [
   {
     title: "Goodman Pickleball Coaching",
-    type: "Pro Web App",
+    type: "Full Pro platform",
     url: "https://www.goodmanpickleball.com",
-    summary: "A full coaching platform with customer accounts, coach dashboards, admin controls, custom quote flow, Stripe payments, notifications, and video/PDF submissions.",
-    tags: ["Accounts", "Dashboards", "Payments", "Uploads", "Admin"]
+    summary: "A custom coaching platform with customer accounts, coach dashboards, admin controls, custom quote flow, payments, notifications, and uploads.",
+    alignment: "Best aligned with the Pro tier because the website supports real business operations, not just marketing pages.",
+    tags: ["Customer accounts", "Coach dashboards", "Admin controls", "Payments", "Uploads"]
   },
   {
     title: "Big Papa Joe Septic",
-    type: "Business Website + Admin Tools",
-    url: "#",
-    summary: "A service-business website with service pages, contact flow, payments, FAQ, testimonials, marketplace-style pages, and admin management tools.",
-    tags: ["Services", "Contact Flow", "Payments", "FAQ", "Admin"]
+    type: "Business/service website",
+    url: "",
+    summary: "A service-business website concept with service pages, contact flow, payments, FAQ, testimonials, and admin tools.",
+    alignment: "Shows the path from Intermediate business site to Pro-style operations when payments and admin tools are added.",
+    tags: ["Service pages", "Contact flow", "Payments", "FAQ", "Admin tools"]
   }
 ];
 
-function App() {
-  const route = window.location.pathname.replace("/", "").toLowerCase() || "home";
+const packageComparison = [
+  ["Beginner", "Simple presence", "One-page site with core content and contact flow."],
+  ["Intermediate", "Lead generation", "Multiple pages, deeper proof, and stronger service explanations."],
+  ["Pro", "Business system", "Portals, dashboards, payments, records, uploads, and workflows."]
+];
 
-  if (route === "beginner") return <Shell><TierPage tier={tiers.beginner} /></Shell>;
-  if (route === "intermediate") return <Shell><TierPage tier={tiers.intermediate} /></Shell>;
-  if (route === "pro") return <Shell><TierPage tier={tiers.pro} /></Shell>;
-  if (route === "builder" || route === "build-your-dream-website") return <Shell><DreamBuilder /></Shell>;
+function App() {
+  const route = window.location.pathname.replace(/^\/+/, "").toLowerCase() || "home";
+
+  if (route === "beginner") return <Shell><BeginnerPage /></Shell>;
+  if (route === "intermediate") return <Shell><IntermediatePage /></Shell>;
+  if (route === "pro") return <Shell><ProPage /></Shell>;
+  if (route === "builder" || route === "build-your-dream-website") return <Shell compactFooter><DreamBuilder /></Shell>;
 
   return (
     <Shell>
-      <Hero />
-      <TrustStrip />
-      <TierOverview />
-      <TierDifference />
-      <DreamBuilderCTA />
-      <Portfolio />
-      <Hosting />
-      <Process />
-      <FinalCTA />
+      <HomePage />
     </Shell>
   );
 }
 
-function Shell({ children }) {
+function Shell({ children, compactFooter = false }) {
   return (
     <div className="app">
       <Nav />
       <main>{children}</main>
-      <Footer />
+      {!compactFooter && <Footer />}
     </div>
   );
 }
@@ -241,8 +333,8 @@ function Nav() {
 
   return (
     <header className="nav-shell">
-      <nav className="nav">
-        <a className="brand" href="/">
+      <nav className="nav" aria-label="Main navigation">
+        <a className="brand" href="/" aria-label="LaunchLine Studio home">
           <span className="brand-mark"><Code2 size={20} /></span>
           <span><strong>LaunchLine</strong><small>Studio</small></span>
         </a>
@@ -251,53 +343,81 @@ function Nav() {
           <a href="/beginner">Beginner</a>
           <a href="/intermediate">Intermediate</a>
           <a href="/pro">Pro</a>
-          <a href="/builder">Dream Builder</a>
+          <a href="/builder">Builder</a>
           <a href="/#contact">Contact</a>
         </div>
 
         <a className="nav-cta" href="/builder">Build My Website <ArrowRight size={16} /></a>
-        <button className="mobile-toggle" onClick={() => setOpen((value) => !value)}>{open ? <X /> : <Menu />}</button>
+        <button className="mobile-toggle" type="button" aria-label="Toggle menu" onClick={() => setOpen((value) => !value)}>
+          {open ? <X size={22} /> : <Menu size={22} />}
+        </button>
       </nav>
     </header>
   );
 }
 
+function HomePage() {
+  return (
+    <>
+      <Hero />
+      <ValueSection />
+      <PackageCards />
+      <BuilderCallout />
+      <PortfolioProof />
+      <HostingSection />
+      <FuturePolicy />
+      <ProcessSection />
+      <ContactSection />
+    </>
+  );
+}
+
 function Hero() {
   return (
-    <section className="section hero">
-      <div className="hero-grid">
-        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
-          <div className="eyebrow"><BadgeCheck size={16} /> Website packages clients can actually understand</div>
-          <h1>Show business owners exactly what they can buy.</h1>
+    <section className="hero-section">
+      <div className="hero-visual" aria-hidden="true">
+        <div className="hero-window hero-window-main">
+          <div className="window-bar"><span /><span /><span /></div>
+          <div className="hero-window-content">
+            <div className="visual-nav"><b>Service Co.</b><i>Services</i><i>Reviews</i><i>Quote</i></div>
+            <div className="visual-hero">
+              <p>Local business website</p>
+              <strong>Clean pages. Clear calls. Better leads.</strong>
+            </div>
+            <div className="visual-grid">
+              <span>Services</span>
+              <span>Booking</span>
+              <span>Payments</span>
+              <span>Reviews</span>
+            </div>
+          </div>
+        </div>
+        <div className="hero-window hero-window-side">
+          <div className="metric-pill"><BarChart3 size={17} /> Quote estimate</div>
+          <div className="mini-dashboard">
+            <span><strong>18</strong> new leads</span>
+            <span><strong>$2.1k</strong> deposits</span>
+            <span><strong>7</strong> uploads</span>
+          </div>
+        </div>
+        <div className="hero-window hero-window-mobile">
+          <div className="phone-top" />
+          <strong>Book service</strong>
+          <span>Today, 3:30 PM</span>
+          <button>Request quote</button>
+        </div>
+      </div>
+
+      <div className="hero-content">
+        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <p className="eyebrow"><BadgeCheck size={16} /> Website packages for real small businesses</p>
+          <h1>Websites that help businesses get found, trusted, and contacted.</h1>
           <p className="hero-text">
-            A refined sales hub with full tier demo pages, a professional quote builder, clickable add-on previews, hosting options, and clear expectations for future support.
+            LaunchLine Studio builds polished websites and custom web platforms for business owners who need more than a generic template. Choose a simple one-page site, a deeper business website, or a platform that runs real workflows.
           </p>
           <div className="hero-actions">
             <a className="btn primary" href="/builder">Build Your Dream Website <ArrowRight size={18} /></a>
-            <a className="btn secondary" href="#tiers">Compare Packages</a>
-          </div>
-          <div className="micro-proof">
-            <span><LayoutTemplate size={16} /> Full tier demos</span>
-            <span><MousePointerClick size={16} /> Clickable add-ons</span>
-            <span><BarChart3 size={16} /> Starting estimate</span>
-          </div>
-        </motion.div>
-
-        <motion.div className="hero-preview" initial={{ opacity: 0, y: 18, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.65, delay: 0.1 }}>
-          <div className="browser-bar"><span /><span /><span /><p>launchline.studio</p></div>
-          <div className="browser-body">
-            <div className="mock-nav"><strong>Website Preview</strong><span>Home</span><span>Services</span><span>Quote</span></div>
-            <div className="mock-hero">
-              <p>Professional service website</p>
-              <h3>From a simple site to a full business platform.</h3>
-              <button>Request quote</button>
-            </div>
-            <div className="mock-grid">
-              <FeatureMini icon={CalendarDays} title="Booking" />
-              <FeatureMini icon={WalletCards} title="Payments" />
-              <FeatureMini icon={LayoutDashboard} title="Dashboard" />
-              <FeatureMini icon={UploadCloud} title="Uploads" />
-            </div>
+            <a className="btn secondary" href="#packages">View Packages</a>
           </div>
         </motion.div>
       </div>
@@ -305,545 +425,120 @@ function Hero() {
   );
 }
 
-function FeatureMini({ icon: Icon, title }) {
-  return <div className="feature-mini"><Icon size={18} /><strong>{title}</strong><small>Optional add-on</small></div>;
-}
-
-function TrustStrip() {
+function ValueSection() {
   return (
-    <section className="trust-strip">
-      <div><strong>3</strong><span>clear package tiers</span></div>
-      <div><strong>9</strong><span>custom add-on demos</span></div>
-      <div><strong>2</strong><span>portfolio proof examples</span></div>
-      <div><strong>100%</strong><span>mobile-friendly sales flow</span></div>
-    </section>
-  );
-}
-
-function TierOverview() {
-  return (
-    <section id="tiers" className="section">
+    <section className="section value-section">
       <div className="section-head">
         <div>
-          <p className="eyebrow small">Package demo pages</p>
-          <h2>Each tier opens into a full website example.</h2>
+          <p className="eyebrow small">Choose the right starting point</p>
+          <h2>Beginner, Intermediate, and Pro are built for different business needs.</h2>
         </div>
         <p>
-          The tiers are separated by purpose, not just color. Beginner is a credibility site, Intermediate is a lead-generation site, and Pro is a custom platform.
+          A business owner should be able to understand what they are buying before they ever ask for a quote. Each package has a full demo, realistic content, clear limits, and optional add-ons.
         </p>
       </div>
-      <div className="tier-grid">
-        {Object.values(tiers).map((tier, index) => <TierCard key={tier.slug} tier={tier} index={index} />)}
+      <div className="comparison-row">
+        {packageComparison.map(([name, title, text]) => (
+          <article className="comparison-card" key={name}>
+            <span>{name}</span>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </article>
+        ))}
       </div>
     </section>
   );
 }
 
-function TierCard({ tier, index }) {
-  const Icon = tier.icon;
+function PackageCards() {
   return (
-    <motion.article className="tier-card" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45, delay: index * 0.08 }}>
-      <div className="tier-card-top">
-        <span className="tier-icon"><Icon size={24} /></span>
+    <section id="packages" className="section">
+      <div className="section-head">
+        <div>
+          <p className="eyebrow small">Website packages</p>
+          <h2>Open a tier to see the actual kind of website a client receives.</h2>
+        </div>
+      </div>
+      <div className="tier-grid">
+        {tierOrder.map((tier, index) => (
+          <PackageCard tier={tier} index={index} key={tier.slug} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function PackageCard({ tier, index }) {
+  const Icon = tier.icon;
+
+  return (
+    <motion.article className="package-card" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: index * 0.06 }}>
+      <div className="package-top">
+        <span className="icon-box"><Icon size={24} /></span>
         <span>{tier.timeline}</span>
       </div>
       <h3>{tier.name}</h3>
-      <p className="tier-label">{tier.label}</p>
-      <p>{tier.short}</p>
-      <div className="price-row"><strong>{tier.priceText}</strong><small>{tier.goal}</small></div>
-      <a className="card-link" href={`/${tier.slug}`}>Open full {tier.name} demo <ChevronRight size={17} /></a>
+      <p className="package-label">{tier.label}</p>
+      <p>{tier.promise}</p>
+      <div className="price-row">
+        <strong>{tier.priceText}</strong>
+        <small>{tier.purpose}</small>
+      </div>
+      <a className="btn primary package-btn" href={`/${tier.slug}`}>{tier.cta} <ChevronRight size={17} /></a>
     </motion.article>
   );
 }
 
-function TierDifference() {
+function BuilderCallout() {
   return (
-    <section className="section difference">
-      <div className="section-head">
+    <section className="builder-band">
+      <div className="section builder-band-inner">
         <div>
-          <p className="eyebrow small">Clear separation</p>
-          <h2>The difference is what the website can do.</h2>
+          <p className="eyebrow small">Build Your Dream Website</p>
+          <h2>Pick a base tier, add business features, and see the estimate update live.</h2>
+          <p>
+            The builder shows how booking, payments, portals, admin tools, uploads, notifications, SEO pages, saved records, and integrations change the website experience.
+          </p>
         </div>
-      </div>
-      <div className="difference-grid">
-        <DifferenceCard tier={tiers.beginner} title="Beginner = Online presence" items={["One-page layout", "Contact-focused", "Service overview", "No business workflow by default"]} />
-        <DifferenceCard tier={tiers.intermediate} title="Intermediate = Lead engine" items={["Multiple pages", "Proof and gallery", "Stronger forms", "Service/SEO structure"]} />
-        <DifferenceCard tier={tiers.pro} title="Pro = Business system" items={["Customer portal", "Admin dashboard", "Payments", "Database workflows"]} />
+        <a className="btn primary" href="/builder">Open Builder <ArrowRight size={18} /></a>
       </div>
     </section>
   );
 }
 
-function DifferenceCard({ tier, title, items }) {
-  const Icon = tier.icon;
-  return (
-    <article className="difference-card">
-      <Icon size={28} />
-      <h3>{title}</h3>
-      <ul>{items.map((item) => <li key={item}><Check size={15} />{item}</li>)}</ul>
-    </article>
-  );
-}
-
-function TierPage({ tier }) {
-  const Icon = tier.icon;
-
-  return (
-    <>
-      <section className="tier-hero">
-        <div className="section tier-hero-grid">
-          <div>
-            <div className="eyebrow"><Icon size={16} /> {tier.name} package demo</div>
-            <h1>{tier.sampleBusiness}</h1>
-            <p className="hero-text">{tier.headline}</p>
-            <p className="tier-explain">{tier.short}</p>
-            <div className="hero-actions">
-              <a className="btn primary" href="/builder">Customize This Tier</a>
-              <a className="btn secondary" href="#sample">View Sample</a>
-            </div>
-          </div>
-          <div className="tier-price-panel">
-            <span>{tier.label}</span>
-            <strong>{tier.priceText}</strong>
-            <small>{tier.timeline}</small>
-            <p>{tier.goal}</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="sample" className="section">
-        <div className="section-head">
-          <div>
-            <p className="eyebrow small">Full tier preview</p>
-            <h2>What the {tier.name} base package looks like.</h2>
-          </div>
-          <p>{tier.ideal}</p>
-        </div>
-        <TierVisual tier={tier} />
-      </section>
-
-      <section className="section">
-        <div className="details-grid">
-          <article className="detail-card">
-            <h3>Included by default</h3>
-            <ul>{tier.includes.map((item) => <li key={item}><Check size={16} />{item}</li>)}</ul>
-          </article>
-          <article className="detail-card">
-            <h3>Not included by default</h3>
-            <ul>{tier.limits.map((item) => <li key={item}><X size={16} />{item}</li>)}</ul>
-          </article>
-          <article className="detail-card action-card">
-            <h3>Need more?</h3>
-            <p>Add-ons can expand this tier. The Dream Builder shows how each feature changes the website experience and the starting estimate.</p>
-            <a className="card-link" href="/builder">Open Dream Builder <ArrowRight size={16} /></a>
-          </article>
-        </div>
-      </section>
-
-      <Hosting />
-      <FinalCTA />
-    </>
-  );
-}
-
-function TierVisual({ tier }) {
-  if (tier.slug === "beginner") return <BeginnerVisual tier={tier} />;
-  if (tier.slug === "intermediate") return <IntermediateVisual tier={tier} />;
-  return <ProVisual tier={tier} />;
-}
-
-function BrowserShell({ children, label }) {
-  return (
-    <div className="website-shell">
-      <div className="browser-bar"><span /><span /><span /><p>{label}</p></div>
-      {children}
-    </div>
-  );
-}
-
-function BeginnerVisual({ tier }) {
-  return (
-    <BrowserShell label="beginner-business-site.com">
-      <div className="site-nav"><strong>{tier.sampleBusiness}</strong><div>{tier.sections.slice(0, 4).map((item) => <span key={item}>{item}</span>)}</div></div>
-      <div className="landing-hero">
-        <div><p>Starter business site</p><h3>{tier.headline}</h3><small>{tier.goal}</small></div>
-        <button>Call Today</button>
-      </div>
-      <div className="landing-grid">
-        <PreviewBlock title="Services" />
-        <PreviewBlock title="Reviews" />
-        <PreviewBlock title="FAQ" />
-        <PreviewBlock title="Contact" />
-      </div>
-    </BrowserShell>
-  );
-}
-
-function IntermediateVisual({ tier }) {
-  return (
-    <BrowserShell label="intermediate-business-site.com">
-      <div className="site-nav"><strong>{tier.sampleBusiness}</strong><div>{tier.sections.map((item) => <span key={item}>{item}</span>)}</div></div>
-      <div className="multi-site">
-        <aside>
-          <strong>Pages</strong>
-          {tier.sections.map((item, index) => <span className={index === 1 ? "active" : ""} key={item}>{item}</span>)}
-        </aside>
-        <main>
-          <div className="multi-hero"><p>Multi-page lead site</p><h3>{tier.headline}</h3><button>Request Estimate</button></div>
-          <div className="multi-grid">
-            <PreviewBlock title="Service Page" />
-            <PreviewBlock title="Gallery" />
-            <PreviewBlock title="Testimonials" />
-            <PreviewBlock title="Lead Form" />
-          </div>
-        </main>
-      </div>
-    </BrowserShell>
-  );
-}
-
-function ProVisual({ tier }) {
-  return (
-    <BrowserShell label="custom-business-platform.app">
-      <div className="site-nav"><strong>{tier.sampleBusiness}</strong><div>{tier.sections.map((item) => <span key={item}>{item}</span>)}</div></div>
-      <div className="app-site">
-        <aside>
-          <strong>App Menu</strong>
-          <span className="active">Dashboard</span>
-          <span>Customers</span>
-          <span>Payments</span>
-          <span>Uploads</span>
-          <span>Admin</span>
-        </aside>
-        <main>
-          <div className="metric-row">
-            <PreviewBlock metric="24" title="Active Requests" />
-            <PreviewBlock metric="$8.4k" title="Payments" />
-            <PreviewBlock metric="7" title="Alerts" />
-          </div>
-          <div className="workflow-grid">
-            <PreviewBlock title="Customer Portal" />
-            <PreviewBlock title="Payment Workflow" />
-            <PreviewBlock title="Admin Controls" />
-            <PreviewBlock title="File Uploads" />
-          </div>
-        </main>
-      </div>
-    </BrowserShell>
-  );
-}
-
-function PreviewBlock({ title, metric }) {
-  return (
-    <div className="preview-block">
-      <span />
-      <strong>{metric || title}</strong>
-      <small>{metric ? title : "Example section"}</small>
-    </div>
-  );
-}
-
-function DreamBuilderCTA() {
-  return (
-    <section className="section">
-      <div className="builder-cta">
-        <div>
-          <p className="eyebrow small">Build your dream website</p>
-          <h2>Let clients click features and see why they matter.</h2>
-          <p>The builder changes by tier and gives each add-on its own interactive mini-demo, not just another block on the page.</p>
-        </div>
-        <a className="btn primary" href="/builder">Open Dream Builder <ArrowRight size={18} /></a>
-      </div>
-    </section>
-  );
-}
-
-function DreamBuilder() {
-  const [tierSlug, setTierSlug] = useState("intermediate");
-  const [selected, setSelected] = useState(["booking"]);
-  const [activeAddon, setActiveAddon] = useState("booking");
-  const [hosting, setHosting] = useState("managed");
-
-  const tier = tiers[tierSlug];
-
-  const total = useMemo(() => {
-    return tier.price + selected.reduce((sum, key) => sum + (addOns.find((item) => item.key === key)?.price || 0), 0);
-  }, [tier.price, selected]);
-
-  const toggleAddon = (key) => {
-    setSelected((current) => {
-      const next = current.includes(key) ? current.filter((item) => item !== key) : [...current, key];
-      if (!current.includes(key)) setActiveAddon(key);
-      if (current.includes(key) && activeAddon === key && next.length) setActiveAddon(next[0]);
-      return next;
-    });
-  };
-
-  const selectedText = selected.map((key) => addOns.find((item) => item.key === key)?.label).filter(Boolean).join(", ");
-  const quoteHref = `mailto:${ownerEmail}?subject=${encodeURIComponent("Dream website quote request")}&body=${encodeURIComponent(`Tier: ${tier.name}\nEstimated starting total: $${total.toLocaleString()}+\nSelected add-ons: ${selectedText || "None"}\nHosting preference: ${hosting === "managed" ? "Managed hosting / maintenance" : "Self-hosted file handoff"}\n\nBusiness details:\n`)}`;
-
-  return (
-    <>
-      <section className="builder-page">
-        <div className="builder-layout">
-          <aside className="builder-panel">
-            <a className="back-link" href="/">← Back to packages</a>
-            <h1>Build your dream website.</h1>
-            <p>Choose a base tier, add features, click the preview, and see why each add-on changes the value of the website.</p>
-
-            <div className="builder-step">
-              <h3>1. Base package</h3>
-              <div className="tier-picker">
-                {Object.values(tiers).map((item) => (
-                  <button key={item.slug} className={tierSlug === item.slug ? "active" : ""} onClick={() => setTierSlug(item.slug)}>
-                    <strong>{item.name}</strong>
-                    <span>{item.label}</span>
-                    <em>{item.priceText}</em>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="builder-step">
-              <h3>2. Custom add-ons</h3>
-              <div className="addon-picker">
-                {addOns.map((addon) => {
-                  const Icon = addon.icon;
-                  const active = selected.includes(addon.key);
-                  const focused = activeAddon === addon.key;
-                  return (
-                    <button
-                      key={addon.key}
-                      className={`${active ? "active" : ""} ${focused ? "focused" : ""}`}
-                      onClick={() => {
-                        toggleAddon(addon.key);
-                        setActiveAddon(addon.key);
-                      }}
-                    >
-                      <span><Icon size={18} /></span>
-                      <div>
-                        <strong>{addon.label}</strong>
-                        <small>+${addon.price.toLocaleString()}{addon.key === "integrations" ? "*" : ""}</small>
-                        <p>{addon.plain}</p>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="builder-step">
-              <h3>3. Hosting preference</h3>
-              <div className="hosting-toggle">
-                <button className={hosting === "managed" ? "active" : ""} onClick={() => setHosting("managed")}>Managed hosting</button>
-                <button className={hosting === "handoff" ? "active" : ""} onClick={() => setHosting("handoff")}>File handoff</button>
-              </div>
-            </div>
-          </aside>
-
-          <main className="builder-stage">
-            <div className="quote-bar">
-              <div><span>Estimated starting total</span><strong>${total.toLocaleString()}+</strong></div>
-              <p>*Final pricing depends on exact scope, pages, integrations, content readiness, revisions, and development time.</p>
-            </div>
-
-            <InteractivePreview tier={tier} selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon} hosting={hosting} />
-            <AddonDemo addonKey={activeAddon} selected={selected} />
-            <a className="btn primary full" href={quoteHref}>Request This Website Quote <ArrowRight size={18} /></a>
-          </main>
-        </div>
-      </section>
-
-      <Hosting />
-    </>
-  );
-}
-
-function InteractivePreview({ tier, selected, activeAddon, setActiveAddon, hosting }) {
-  if (tier.slug === "beginner") return <BeginnerBuilder tier={tier} selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon} hosting={hosting} />;
-  if (tier.slug === "intermediate") return <IntermediateBuilder tier={tier} selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon} hosting={hosting} />;
-  return <ProBuilder tier={tier} selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon} hosting={hosting} />;
-}
-
-function AddonTab({ addonKey, selected, activeAddon, setActiveAddon, children }) {
-  const enabled = selected.includes(addonKey);
-  return (
-    <button disabled={!enabled} onClick={() => setActiveAddon(addonKey)} className={`${enabled ? "enabled" : "disabled"} ${activeAddon === addonKey ? "active" : ""}`}>
-      {children}
-    </button>
-  );
-}
-
-function BeginnerBuilder({ tier, selected, activeAddon, setActiveAddon, hosting }) {
-  return (
-    <div className="live-frame beginner-frame">
-      <div className="live-nav"><strong>{tier.sampleBusiness}</strong><div><span>Services</span><span>Reviews</span><span>Contact</span></div></div>
-      <div className="builder-landing">
-        <div className="builder-hero-simple">
-          <p>One-page credibility site</p>
-          <h3>{tier.headline}</h3>
-          <button>{selected.includes("booking") ? "Schedule Service" : selected.includes("payments") ? "Pay Deposit" : "Call Today"}</button>
-        </div>
-        <div className="simple-feature-row">
-          <AddonTab addonKey="booking" selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon}><CalendarDays size={16} /> Schedule CTA</AddonTab>
-          <AddonTab addonKey="payments" selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon}><CreditCard size={16} /> Deposit CTA</AddonTab>
-          <AddonTab addonKey="seo" selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon}><Search size={16} /> Service pages</AddonTab>
-          <AddonTab addonKey="uploads" selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon}><UploadCloud size={16} /> Send photos</AddonTab>
-        </div>
-        <div className="preview-grid">
-          <PreviewBlock title="Services" />
-          <PreviewBlock title="Reviews" />
-          <PreviewBlock title="FAQ" />
-          <PreviewBlock title="Contact Form" />
-        </div>
-      </div>
-      <HostingTag hosting={hosting} />
-    </div>
-  );
-}
-
-function IntermediateBuilder({ tier, selected, activeAddon, setActiveAddon, hosting }) {
-  return (
-    <div className="live-frame intermediate-frame">
-      <div className="live-nav"><strong>{tier.sampleBusiness}</strong><div><span>Home</span><span>Services</span><span>Gallery</span><span>Quote</span>{selected.includes("booking") && <span>Booking</span>}</div></div>
-      <div className="builder-multipage">
-        <aside>
-          <strong>Pages</strong>
-          <span className="active">Services</span>
-          <span>Gallery</span>
-          <span>Reviews</span>
-          <span>Quote Form</span>
-          {selected.includes("seo") && <span>Location Pages</span>}
-          {selected.includes("database") && <span>Submitted Leads</span>}
-        </aside>
-        <main>
-          <div className="builder-hero-multi">
-            <p>Lead-generation website</p>
-            <h3>{tier.headline}</h3>
-          </div>
-          <div className="conversion-tabs">
-            <AddonTab addonKey="booking" selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon}><CalendarDays size={16} /> Schedule estimate</AddonTab>
-            <AddonTab addonKey="payments" selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon}><WalletCards size={16} /> Deposit</AddonTab>
-            <AddonTab addonKey="notifications" selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon}><Bell size={16} /> Lead alert</AddonTab>
-            <AddonTab addonKey="uploads" selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon}><UploadCloud size={16} /> Project photos</AddonTab>
-          </div>
-          <div className="preview-grid">
-            <PreviewBlock title="Service Page" />
-            <PreviewBlock title="Gallery Proof" />
-            <PreviewBlock title="Lead Form" />
-            <PreviewBlock title="Testimonials" />
-          </div>
-        </main>
-      </div>
-      <HostingTag hosting={hosting} />
-    </div>
-  );
-}
-
-function ProBuilder({ tier, selected, activeAddon, setActiveAddon, hosting }) {
-  return (
-    <div className="live-frame pro-frame">
-      <div className="live-nav"><strong>{tier.sampleBusiness}</strong><div><span>Portal</span><span>Payments</span><span>Uploads</span><span>Admin</span></div></div>
-      <div className="builder-app">
-        <aside>
-          <strong>Platform Menu</strong>
-          <AddonTab addonKey="portal" selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon}><UserRound size={15} /> Portal</AddonTab>
-          <AddonTab addonKey="booking" selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon}><CalendarDays size={15} /> Requests</AddonTab>
-          <AddonTab addonKey="payments" selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon}><WalletCards size={15} /> Payments</AddonTab>
-          <AddonTab addonKey="uploads" selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon}><UploadCloud size={15} /> Uploads</AddonTab>
-          <AddonTab addonKey="admin" selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon}><LayoutDashboard size={15} /> Admin</AddonTab>
-        </aside>
-        <main>
-          <div className="metric-row">
-            <button onClick={() => setActiveAddon("database")} className={selected.includes("database") ? "enabled" : "disabled"}><strong>128</strong><span>Records</span></button>
-            <button onClick={() => setActiveAddon("payments")} className={selected.includes("payments") ? "enabled" : "disabled"}><strong>$8.4k</strong><span>Payments</span></button>
-            <button onClick={() => setActiveAddon("notifications")} className={selected.includes("notifications") ? "enabled" : "disabled"}><strong>7</strong><span>Alerts</span></button>
-          </div>
-          <div className="workflow-grid">
-            <WorkflowCard title="Customer Request" active={activeAddon === "booking"} />
-            <WorkflowCard title="Quote / Payment" active={activeAddon === "payments"} />
-            <WorkflowCard title="Upload Review" active={activeAddon === "uploads"} />
-            <WorkflowCard title="Admin Action" active={activeAddon === "admin"} />
-          </div>
-        </main>
-      </div>
-      <HostingTag hosting={hosting} />
-    </div>
-  );
-}
-
-function WorkflowCard({ title, active }) {
-  return <div className={`workflow-card ${active ? "active" : ""}`}><span /><strong>{title}</strong><small>{active ? "Selected workflow" : "Workflow preview"}</small></div>;
-}
-
-function HostingTag({ hosting }) {
-  return <div className="hosting-tag">{hosting === "managed" ? <><Server size={18} /> Managed hosting and maintenance selected</> : <><FileText size={18} /> Self-hosted file handoff selected</>}</div>;
-}
-
-function AddonDemo({ addonKey, selected }) {
-  const addon = addOns.find((item) => item.key === addonKey);
-  const [step, setStep] = useState(0);
-
-  if (!addon || !selected.includes(addonKey)) {
-    return (
-      <div className="addon-demo empty">
-        <h3>Select an add-on to see the feature in action.</h3>
-        <p>Each add-on includes a mini demo and a business explanation so customers understand why it costs more than a basic website.</p>
-      </div>
-    );
-  }
-
-  const Icon = addon.icon;
-
-  return (
-    <div className="addon-demo">
-      <div className="addon-demo-head">
-        <span><Icon size={22} /></span>
-        <div>
-          <h3>{addon.label}</h3>
-          <p>{addon.plain}</p>
-        </div>
-      </div>
-
-      <div className="demo-click-area">
-        <div className="demo-screen">
-          <Icon size={30} />
-          <strong>{addon.steps[step]}</strong>
-          <p>{addon.technical}</p>
-        </div>
-        <div className="demo-steps">
-          {addon.steps.map((item, index) => (
-            <button key={item} className={step === index ? "active" : ""} onClick={() => setStep(index)}>
-              {index + 1}. {item}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="why-box">
-        <strong>Why this matters:</strong>
-        <p>{addon.plain}</p>
-      </div>
-    </div>
-  );
-}
-
-function Portfolio() {
+function PortfolioProof() {
   return (
     <section className="section">
       <div className="section-head">
-        <div><p className="eyebrow small">Proof of work</p><h2>Real projects that support the packages.</h2></div>
+        <div>
+          <p className="eyebrow small">Portfolio proof</p>
+          <h2>Real project examples tied back to the package tiers.</h2>
+        </div>
+        <p>
+          Beginner creates simple presence, Intermediate expands a business website, and Pro turns a website into a platform with workflows.
+        </p>
       </div>
-      <div className="work-grid">
+      <div className="portfolio-grid">
         {portfolio.map((item) => (
-          <article className="work-card" key={item.title}>
-            <div className="work-visual"><Globe2 size={42} /><strong>{item.title}</strong><span>{item.type}</span></div>
-            <div className="work-copy">
+          <article className="portfolio-card" key={item.title}>
+            <div className="portfolio-visual">
+              <Globe2 size={38} />
+              <strong>{item.title}</strong>
+              <span>{item.type}</span>
+            </div>
+            <div className="portfolio-copy">
               <span>{item.type}</span>
               <h3>{item.title}</h3>
               <p>{item.summary}</p>
-              <div className="tag-row">{item.tags.map((tag) => <em key={tag}>{tag}</em>)}</div>
-              {item.url !== "#" ? <a href={item.url} target="_blank" rel="noreferrer">View live example <ExternalLink size={15} /></a> : <a href="/builder">Ask to see demo <ExternalLink size={15} /></a>}
+              <p className="alignment-copy">{item.alignment}</p>
+              <div className="tag-row">
+                {item.tags.map((tag) => <em key={tag}>{tag}</em>)}
+              </div>
+              {item.url ? (
+                <a href={item.url} target="_blank" rel="noreferrer">View live example <ExternalLink size={15} /></a>
+              ) : (
+                <a href="/builder">Build a similar quote <ArrowRight size={15} /></a>
+              )}
             </div>
           </article>
         ))}
@@ -852,60 +547,91 @@ function Portfolio() {
   );
 }
 
-function Hosting() {
+function HostingSection() {
   return (
     <section className="section">
       <div className="section-head">
-        <div><p className="eyebrow small">Hosting and maintenance</p><h2>Two clear options after launch.</h2></div>
-        <p>Clients can choose a hands-off managed plan or take the files and manage the site themselves.</p>
+        <div>
+          <p className="eyebrow small">Hosting and support</p>
+          <h2>Two clear options after launch.</h2>
+        </div>
+        <p>
+          Some clients want ongoing help. Others want the project files and prefer to manage their own hosting. Both paths are clear before launch.
+        </p>
       </div>
       <div className="hosting-grid">
-        <article className="hosting-card featured">
+        <article className="hosting-card">
           <Server size={28} />
           <h3>Managed Hosting & Maintenance</h3>
-          <p>For clients who prefer a hands-off experience, I provide ongoing hosting, deployment support, monitoring, maintenance, and technical assistance for a monthly service fee.</p>
+          <p>{hostingOptions.managed.description} This helps keep the website online, updated, and operating smoothly while the business focuses on its customers.</p>
           <ul>
-            <li><Check size={16} /> Website hosting and deployment support</li>
+            <li><Check size={16} /> Hosting setup</li>
+            <li><Check size={16} /> Deployment support</li>
             <li><Check size={16} /> General uptime monitoring</li>
-            <li><Check size={16} /> Routine technical maintenance</li>
-            <li><Check size={16} /> Basic support if something breaks</li>
+            <li><Check size={16} /> Technical issue resolution</li>
+            <li><Check size={16} /> Minor maintenance</li>
+            <li><Check size={16} /> Backups and security-conscious updates</li>
+            <li><Check size={16} /> Optional small content updates depending on plan</li>
           </ul>
         </article>
-
         <article className="hosting-card">
           <FileText size={28} />
           <h3>Self-Hosted File Handoff</h3>
-          <p>Clients who prefer to manage their own hosting receive the completed project files, assets, and deployment instructions after launch.</p>
+          <p>{hostingOptions.handoff.description} I will assist with the initial setup, but future hosting, updates, maintenance, bug fixes, and new features become the client's responsibility unless separately quoted.</p>
           <ul>
-            <li><Check size={16} /> Complete project file package</li>
-            <li><Check size={16} /> Initial launch assistance</li>
-            <li><Check size={16} /> Client manages future hosting/accounts</li>
-            <li><Check size={16} /> Future work quoted separately</li>
+            <li><Check size={16} /> Full project files</li>
+            <li><Check size={16} /> Initial deployment help</li>
+            <li><Check size={16} /> Basic instructions</li>
+            <li><Check size={16} /> No ongoing support unless paid</li>
+            <li><Check size={16} /> Future changes billed separately</li>
           </ul>
         </article>
       </div>
-      <div className="future-policy">
-        <LifeBuoy size={26} />
+    </section>
+  );
+}
+
+function FuturePolicy() {
+  return (
+    <section className="section policy-section">
+      <div className="policy-layout">
         <div>
-          <h3>Future Updates & Enhancements</h3>
-          <p>After the original project scope is completed, additional features, redesign requests, integrations, bug fixes, or workflow changes may be completed under a separate fixed-price quote or hourly development agreement.</p>
+          <p className="eyebrow small">Future Updates & Enhancements</p>
+          <h2>Scope stays clear after launch.</h2>
+        </div>
+        <div>
+          <p>
+            After the original project scope is completed, additional features, redesign requests, integrations, bug fixes, or workflow changes may be completed under a separate fixed-price quote or hourly development agreement.
+          </p>
+          <ul className="policy-list">
+            <li><Check size={16} /> New features are quoted separately.</li>
+            <li><Check size={16} /> Bug fixes after handoff may require a flat fee if not under maintenance.</li>
+            <li><Check size={16} /> New integrations are separate work.</li>
+            <li><Check size={16} /> Design changes after approval may increase cost.</li>
+            <li><Check size={16} /> Ongoing maintenance is available through monthly support.</li>
+          </ul>
         </div>
       </div>
     </section>
   );
 }
 
-function Process() {
+function ProcessSection() {
   const steps = [
-    ["Discovery", "Define business goals, pages, features, audience, and must-have functionality.", MousePointerClick],
-    ["Scope", "Estimate based on complexity, integrations, content, and launch needs.", BarChart3],
-    ["Build", "Develop, review, revise, and prepare the website or platform.", Wrench],
-    ["Launch", "Deploy with managed support or complete project handoff.", Zap]
+    ["Discovery", "Clarify goals, pages, features, audience, content readiness, and must-have business workflows.", MousePointerClick],
+    ["Scope", "Turn the idea into a clear package, add-on list, hosting choice, timeline, and starting estimate.", ClipboardCheck],
+    ["Build", "Design, develop, revise, and prepare the website or platform for launch.", Wrench],
+    ["Launch", "Deploy with managed support or provide the completed files and handoff instructions.", Zap]
   ];
 
   return (
     <section className="section">
-      <div className="section-head center"><p className="eyebrow small">Process</p><h2>From idea to launch.</h2></div>
+      <div className="section-head">
+        <div>
+          <p className="eyebrow small">What happens next</p>
+          <h2>A simple path from idea to launch.</h2>
+        </div>
+      </div>
       <div className="process-grid">
         {steps.map(([title, text, Icon], index) => (
           <article className="process-card" key={title}>
@@ -920,33 +646,880 @@ function Process() {
   );
 }
 
-function FinalCTA() {
+function ContactSection({ compact = false }) {
   return (
-    <section id="contact" className="section">
-      <div className="contact-card">
+    <section id="contact" className={`section ${compact ? "compact-contact" : ""}`}>
+      <div className="contact-layout">
         <div>
-          <p className="eyebrow small">Start the project</p>
-          <h2>Pick a tier, test add-ons, then request a quote.</h2>
-          <p>The quote builder gives a starting estimate. Final pricing depends on exact scope, integrations, revisions, content readiness, and development time.</p>
-          <div className="hero-actions">
-            <a className="btn primary" href={`mailto:${ownerEmail}`}><Mail size={18} /> Email Me</a>
-            <a className="btn secondary" href="/builder">Build Estimate</a>
+          <p className="eyebrow small">Request a quote</p>
+          <h2>Tell me what your website needs to do.</h2>
+          <p>
+            Share the tier you are considering, the features you want, and whether you prefer managed hosting or a file handoff. The first estimate is a starting point, then final pricing is scoped around the real project.
+          </p>
+          <div className="contact-points">
+            <span><Mail size={16} /> {ownerEmail}</span>
+            <span><ShieldCheck size={16} /> Clear scope before build</span>
+            <span><LifeBuoy size={16} /> Monthly support available</span>
           </div>
         </div>
-        <form className="lead-form" onSubmit={(e) => {
-          e.preventDefault();
-          const data = new FormData(e.currentTarget);
-          const subject = encodeURIComponent("Website project request");
-          const body = encodeURIComponent(`Name: ${data.get("name")}\nBusiness: ${data.get("business")}\nTier: ${data.get("tier")}\nHosting: ${data.get("hosting")}\nMessage: ${data.get("message")}`);
-          window.location.href = `mailto:${ownerEmail}?subject=${subject}&body=${body}`;
-        }}>
-          <label>Name<input name="name" required placeholder="Your name" /></label>
-          <label>Business<input name="business" required placeholder="Business name" /></label>
-          <label>Tier interest<select name="tier" defaultValue="Intermediate"><option>Beginner</option><option>Intermediate</option><option>Pro</option><option>Not sure yet</option></select></label>
-          <label>Hosting preference<select name="hosting" defaultValue="Managed hosting"><option>Managed hosting / maintenance</option><option>Self-hosted file handoff</option><option>Not sure yet</option></select></label>
-          <label>What should the website do?<textarea name="message" rows="4" placeholder="Payments, booking, dashboard, portal, uploads, integrations, etc." /></label>
-          <button type="submit">Send Website Request <ArrowRight size={17} /></button>
-        </form>
+        <LeadForm />
+      </div>
+    </section>
+  );
+}
+
+function LeadForm({ presetTier = "Intermediate" }) {
+  return (
+    <form className="lead-form" onSubmit={(event) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      const subject = encodeURIComponent("Website project request");
+      const body = encodeURIComponent(
+        `Name: ${data.get("name")}\nBusiness: ${data.get("business")}\nEmail: ${data.get("email")}\nTier: ${data.get("tier")}\nHosting: ${data.get("hosting")}\nMessage: ${data.get("message")}`
+      );
+      window.location.href = `mailto:${ownerEmail}?subject=${subject}&body=${body}`;
+    }}>
+      <label>Name<input name="name" required placeholder="Your name" /></label>
+      <label>Business<input name="business" required placeholder="Business name" /></label>
+      <label>Email<input name="email" type="email" required placeholder="you@example.com" /></label>
+      <label>Tier interest
+        <select name="tier" defaultValue={presetTier}>
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Pro</option>
+          <option>Not sure yet</option>
+        </select>
+      </label>
+      <label>Hosting preference
+        <select name="hosting" defaultValue="Managed hosting / maintenance">
+          <option>Managed hosting / maintenance</option>
+          <option>Self-hosted file handoff</option>
+          <option>Not sure yet</option>
+        </select>
+      </label>
+      <label>What should the website do?
+        <textarea name="message" rows="4" placeholder="Tell me about pages, booking, payments, dashboards, uploads, SEO pages, or integrations." />
+      </label>
+      <button type="submit">Send Website Request <Send size={17} /></button>
+    </form>
+  );
+}
+
+function TierIntro({ tier }) {
+  const Icon = tier.icon;
+
+  return (
+    <section className="tier-intro">
+      <div className="section tier-intro-grid">
+        <div>
+          <p className="eyebrow"><Icon size={16} /> {tier.name} package demo</p>
+          <h1>{tier.sampleBusiness}</h1>
+          <p className="hero-text">{tier.promise}</p>
+          <div className="hero-actions">
+            <a className="btn primary" href="/builder">Customize This Tier</a>
+            <a className="btn secondary" href="#demo">View Demo Page</a>
+          </div>
+        </div>
+        <aside className="tier-summary-panel">
+          <span>{tier.label}</span>
+          <strong>{tier.priceText}</strong>
+          <small>{tier.timeline}</small>
+          <p>{tier.purpose}</p>
+        </aside>
+      </div>
+    </section>
+  );
+}
+
+function PackageDetails({ tier }) {
+  return (
+    <section className="section">
+      <div className="details-grid">
+        <article className="detail-card">
+          <h3>Included by default</h3>
+          <ul>{tier.includes.map((item) => <li key={item}><Check size={16} />{item}</li>)}</ul>
+        </article>
+        <article className="detail-card">
+          <h3>Best fit</h3>
+          <p>{tier.bestFor}</p>
+          <h3 className="detail-subhead">Not the right fit when</h3>
+          <p>{tier.notFor}</p>
+        </article>
+        <article className="detail-card action-detail">
+          <h3>Add features live</h3>
+          <p>The builder shows how optional features change the site preview and starting estimate.</p>
+          <a className="btn primary" href="/builder">Open Builder <ArrowRight size={16} /></a>
+        </article>
+      </div>
+    </section>
+  );
+}
+
+function BeginnerPage() {
+  const tier = tiers.beginner;
+
+  return (
+    <>
+      <TierIntro tier={tier} />
+      <section id="demo" className="sample-page beginner-sample">
+        <BusinessHeader business="Spark & Shine Mobile Detailing" links={["Services", "Reviews", "FAQ", "Contact"]} phone="(555) 281-4400" />
+        <section className="sample-hero two-column">
+          <div>
+            <p className="sample-kicker">Mobile detailing in Lakeland, FL</p>
+            <h2>Fresh, careful detailing brought straight to your driveway.</h2>
+            <p>
+              Spark & Shine helps busy car owners protect their vehicle, restore the interior, and keep a clean ride without losing half a day at a shop.
+            </p>
+            <div className="sample-actions">
+              <a className="sample-btn primary" href="tel:+15552814400"><Phone size={17} /> Call Now</a>
+              <a className="sample-btn" href="#beginner-quote">Request Quote</a>
+            </div>
+          </div>
+          <div className="detail-visual">
+            <div className="shine-card">
+              <Sparkles size={30} />
+              <strong>Same-week openings</strong>
+              <span>Interior, exterior, and full detail packages</span>
+            </div>
+          </div>
+        </section>
+
+        <section className="sample-section">
+          <div className="sample-section-head">
+            <p>Services</p>
+            <h3>Simple packages customers can understand quickly.</h3>
+          </div>
+          <div className="service-grid">
+            {[
+              ["Express Wash", "Foam wash, wheels, windows, tire shine, and a hand dry for a clean weekly reset."],
+              ["Interior Refresh", "Vacuum, wipe down, cup holders, plastics, glass, mats, and odor treatment."],
+              ["Full Detail", "Interior refresh plus exterior wash, paint-safe decontamination, and protective spray sealant."]
+            ].map(([title, text]) => <ServiceCard title={title} text={text} key={title} />)}
+          </div>
+        </section>
+
+        <section className="sample-section two-column trust-section">
+          <div>
+            <p className="sample-kicker">About</p>
+            <h3>Locally owned, fully mobile, and careful with every vehicle.</h3>
+            <p>
+              Customers choose Spark & Shine because appointments are easy, pricing is clear, and the work is done with professional products that protect the vehicle.
+            </p>
+          </div>
+          <div className="trust-list">
+            <span><ShieldCheck size={18} /> Insured service</span>
+            <span><BadgeCheck size={18} /> Satisfaction check before leaving</span>
+            <span><MapPin size={18} /> Serving Lakeland and nearby neighborhoods</span>
+          </div>
+        </section>
+
+        <section className="sample-section">
+          <div className="sample-section-head">
+            <p>Reviews</p>
+            <h3>Real trust signals for a simple local service site.</h3>
+          </div>
+          <div className="review-grid">
+            {[
+              ["Maya R.", "My SUV looked new again, and booking was incredibly easy."],
+              ["Jordan P.", "Showed up on time, explained the packages, and did excellent work."],
+              ["Tanya W.", "The interior refresh was worth every dollar. I booked the full detail next."]
+            ].map(([name, text]) => <ReviewCard name={name} text={text} key={name} />)}
+          </div>
+        </section>
+
+        <section className="sample-section two-column">
+          <div>
+            <p className="sample-kicker">FAQ</p>
+            <h3>Answers that reduce hesitation before someone calls.</h3>
+          </div>
+          <div className="faq-list">
+            <FaqItem question="Do you bring your own supplies?" answer="Yes. We bring professional products, tools, and water when needed." />
+            <FaqItem question="How long does a full detail take?" answer="Most full details take 2-4 hours depending on vehicle size and condition." />
+            <FaqItem question="Can I book at my office?" answer="Yes. Mobile appointments can be scheduled at home or work when the location is accessible." />
+          </div>
+        </section>
+
+        <section id="beginner-quote" className="sample-section quote-section">
+          <div>
+            <p className="sample-kicker">Contact</p>
+            <h3>Request a detailing quote.</h3>
+            <p>Beginner sites keep the contact path obvious: call, text, or send a short form.</p>
+          </div>
+          <form className="sample-form">
+            <input placeholder="Name" />
+            <input placeholder="Vehicle" />
+            <select defaultValue="Full Detail">
+              <option>Express Wash</option>
+              <option>Interior Refresh</option>
+              <option>Full Detail</option>
+            </select>
+            <textarea rows="3" placeholder="Tell us what you need cleaned." />
+            <button type="button">Request Quote</button>
+          </form>
+        </section>
+      </section>
+      <PackageDetails tier={tier} />
+      <ContactSection compact />
+    </>
+  );
+}
+
+function IntermediatePage() {
+  const tier = tiers.intermediate;
+
+  return (
+    <>
+      <TierIntro tier={tier} />
+      <section id="demo" className="sample-page intermediate-sample">
+        <BusinessHeader business="Iron Ridge Home Services" links={["Home", "Services", "Gallery", "Areas", "Quote"]} phone="(555) 664-9108" />
+        <section className="sample-hero contractor-hero">
+          <div>
+            <p className="sample-kicker">Roofing, siding, and exterior repairs</p>
+            <h2>Reliable exterior work for homes that need strong first impressions.</h2>
+            <p>
+              Iron Ridge helps homeowners plan repairs, compare service options, view project examples, and request a clear estimate.
+            </p>
+            <div className="sample-actions">
+              <a className="sample-btn primary" href="#intermediate-quote">Request Estimate</a>
+              <a className="sample-btn" href="#gallery">View Projects</a>
+            </div>
+          </div>
+          <div className="stats-panel">
+            <span><strong>14+</strong> years experience</span>
+            <span><strong>260</strong> completed projects</span>
+            <span><strong>4.9</strong> average rating</span>
+          </div>
+        </section>
+
+        <section className="sample-section">
+          <div className="sample-section-head">
+            <p>Services</p>
+            <h3>Dedicated service pages make the business easier to understand.</h3>
+          </div>
+          <div className="service-grid four">
+            {[
+              ["Roof Repair", "Leak checks, storm damage repairs, flashing, vents, and shingle replacement."],
+              ["Siding Replacement", "Modern siding options, trim, weather barriers, and color guidance."],
+              ["Gutter Systems", "Seamless gutters, guards, downspouts, and drainage corrections."],
+              ["Exterior Inspections", "Photo-based reports with priority recommendations and repair timelines."]
+            ].map(([title, text]) => <ServiceCard title={title} text={text} key={title} />)}
+          </div>
+        </section>
+
+        <section id="gallery" className="sample-section">
+          <div className="sample-section-head">
+            <p>Gallery</p>
+            <h3>Project proof helps visitors trust the business before they submit a lead.</h3>
+          </div>
+          <div className="gallery-grid">
+            {[
+              ["Storm repair", "Wind-damaged shingles replaced in one day."],
+              ["Modern siding", "Full exterior refresh with updated trim."],
+              ["Gutter upgrade", "Improved drainage for a low-slope roofline."]
+            ].map(([title, text], index) => <ProjectCard title={title} text={text} index={index} key={title} />)}
+          </div>
+        </section>
+
+        <section className="sample-section process-sample">
+          <div className="sample-section-head">
+            <p>Process</p>
+            <h3>A stronger conversion flow sets expectations before the quote.</h3>
+          </div>
+          <div className="step-row">
+            {[
+              ["1", "Request", "Send project details and photos."],
+              ["2", "Inspect", "Get a clear recommendation."],
+              ["3", "Approve", "Confirm scope and schedule."],
+              ["4", "Complete", "Review finished work and warranty notes."]
+            ].map(([num, title, text]) => <StepCard num={num} title={title} text={text} key={title} />)}
+          </div>
+        </section>
+
+        <section className="sample-section two-column">
+          <div>
+            <p className="sample-kicker">Service Areas</p>
+            <h3>SEO-style location pages help local customers find the right service.</h3>
+            <p>
+              Example pages can target roofing repair in Lakeland, siding replacement in Winter Haven, and gutter installation in Plant City.
+            </p>
+          </div>
+          <div className="area-list">
+            <span>Lakeland roof repair</span>
+            <span>Winter Haven siding</span>
+            <span>Plant City gutters</span>
+            <span>Auburndale exterior inspections</span>
+          </div>
+        </section>
+
+        <section className="sample-section">
+          <div className="review-grid">
+            <ReviewCard name="Chris M." text="The website made it easy to understand which repair I needed before I called." />
+            <ReviewCard name="Elena S." text="The gallery and process page helped us feel confident requesting a quote." />
+            <ReviewCard name="Nathan B." text="Clear service pages, fast response, and a smooth estimate process." />
+          </div>
+        </section>
+
+        <section className="sample-section two-column">
+          <div>
+            <p className="sample-kicker">FAQ</p>
+            <h3>Deeper content handles common sales objections.</h3>
+          </div>
+          <div className="faq-list">
+            <FaqItem question="Do you work with insurance claims?" answer="We provide photo documentation and repair estimates that homeowners can share with their carrier." />
+            <FaqItem question="Can I send project photos first?" answer="Yes. Photos help us understand urgency and prepare better questions before the inspection." />
+            <FaqItem question="Do you offer maintenance plans?" answer="Seasonal inspection options are available for homeowners who want recurring exterior checks." />
+          </div>
+        </section>
+
+        <section id="intermediate-quote" className="sample-section quote-section">
+          <div>
+            <p className="sample-kicker">Request Quote</p>
+            <h3>Lead forms can collect better project details.</h3>
+            <p>Intermediate sites can ask smarter questions and route stronger leads to the business.</p>
+          </div>
+          <form className="sample-form">
+            <input placeholder="Name" />
+            <input placeholder="Project address" />
+            <select defaultValue="Roof Repair">
+              <option>Roof Repair</option>
+              <option>Siding Replacement</option>
+              <option>Gutter Systems</option>
+              <option>Exterior Inspection</option>
+            </select>
+            <textarea rows="3" placeholder="Describe the issue or project." />
+            <button type="button">Request Estimate</button>
+          </form>
+        </section>
+      </section>
+      <PackageDetails tier={tier} />
+      <ContactSection compact />
+    </>
+  );
+}
+
+function ProPage() {
+  const tier = tiers.pro;
+
+  return (
+    <>
+      <TierIntro tier={tier} />
+      <section id="demo" className="sample-page pro-sample">
+        <BusinessHeader business="Apex Performance Portal" links={["Portal", "Requests", "Payments", "Uploads", "Admin"]} phone="Client platform" />
+        <section className="platform-hero">
+          <div>
+            <p className="sample-kicker">Custom coaching operations platform</p>
+            <h2>A private portal that manages clients, requests, payments, uploads, and coaching activity.</h2>
+            <p>
+              Pro builds are for businesses that need the website to run part of the business: customer accounts, staff views, admin actions, status tracking, and database-backed workflows.
+            </p>
+          </div>
+          <div className="login-panel">
+            <UserRound size={26} />
+            <strong>Client Login</strong>
+            <input placeholder="client@email.com" />
+            <input placeholder="Password" type="password" />
+            <button>Open Portal</button>
+          </div>
+        </section>
+
+        <section className="platform-grid">
+          <aside className="platform-sidebar">
+            <strong>Apex Admin</strong>
+            <span className="active"><LayoutDashboard size={16} /> Dashboard</span>
+            <span><CalendarDays size={16} /> Requests</span>
+            <span><WalletCards size={16} /> Payments</span>
+            <span><UploadCloud size={16} /> Uploads</span>
+            <span><Bell size={16} /> Notifications</span>
+          </aside>
+          <div className="platform-main">
+            <div className="metric-row">
+              <MetricCard label="Active clients" value="42" />
+              <MetricCard label="Open requests" value="18" />
+              <MetricCard label="Paid this month" value="$8.4k" />
+              <MetricCard label="Unread alerts" value="7" />
+            </div>
+
+            <div className="dashboard-split">
+              <section className="dashboard-panel">
+                <div className="panel-head">
+                  <h3>Customer Dashboard</h3>
+                  <span>Portal preview</span>
+                </div>
+                <div className="portal-list">
+                  <span><Check size={16} /> Training plan updated</span>
+                  <span><CalendarDays size={16} /> Next session requested</span>
+                  <span><UploadCloud size={16} /> Swing video uploaded</span>
+                  <span><WalletCards size={16} /> Invoice deposit paid</span>
+                </div>
+              </section>
+              <section className="dashboard-panel">
+                <div className="panel-head">
+                  <h3>Admin Dashboard</h3>
+                  <span>Management tools</span>
+                </div>
+                <div className="action-list">
+                  <button>Approve Request</button>
+                  <button>Send Quote</button>
+                  <button>Mark Paid</button>
+                  <button>Notify Client</button>
+                </div>
+              </section>
+            </div>
+
+            <section className="dashboard-panel">
+              <div className="panel-head">
+                <h3>Saved Records</h3>
+                <span>Database-style workflow</span>
+              </div>
+              <div className="records-table">
+                <div><b>Client</b><b>Request</b><b>Status</b><b>Total</b></div>
+                <div><span>Jamie R.</span><span>Video review</span><em>In review</em><span>$180</span></div>
+                <div><span>Marcus T.</span><span>Private session</span><em>Scheduled</em><span>$240</span></div>
+                <div><span>Priya S.</span><span>Training plan</span><em>Paid</em><span>$320</span></div>
+              </div>
+            </section>
+
+            <section className="dashboard-panel workflow-panel">
+              <div className="panel-head">
+                <h3>Request Workflow</h3>
+                <span>Booking, payment, uploads, and notifications</span>
+              </div>
+              <div className="workflow-lane">
+                <span>Request received</span>
+                <span>Quote sent</span>
+                <span>Deposit paid</span>
+                <span>File uploaded</span>
+                <span>Coach notified</span>
+              </div>
+            </section>
+          </div>
+        </section>
+      </section>
+      <PackageDetails tier={tier} />
+      <ContactSection compact />
+    </>
+  );
+}
+
+function BusinessHeader({ business, links, phone }) {
+  return (
+    <header className="business-header">
+      <a href="#demo" className="business-brand">{business}</a>
+      <nav>
+        {links.map((link) => <a href={`#${link.toLowerCase().replace(/\s+/g, "-")}`} key={link}>{link}</a>)}
+      </nav>
+      <span>{phone}</span>
+    </header>
+  );
+}
+
+function ServiceCard({ title, text }) {
+  return (
+    <article className="service-card">
+      <h4>{title}</h4>
+      <p>{text}</p>
+    </article>
+  );
+}
+
+function ReviewCard({ name, text }) {
+  return (
+    <article className="review-card">
+      <div className="stars" aria-label="Five star review">
+        {[0, 1, 2, 3, 4].map((item) => <Star size={15} fill="currentColor" key={item} />)}
+      </div>
+      <p>"{text}"</p>
+      <strong>{name}</strong>
+    </article>
+  );
+}
+
+function FaqItem({ question, answer }) {
+  return (
+    <article className="faq-item">
+      <h4>{question}</h4>
+      <p>{answer}</p>
+    </article>
+  );
+}
+
+function ProjectCard({ title, text, index }) {
+  return (
+    <article className="project-card">
+      <div className={`project-visual visual-${index + 1}`}>
+        <Home size={34} />
+      </div>
+      <h4>{title}</h4>
+      <p>{text}</p>
+    </article>
+  );
+}
+
+function StepCard({ num, title, text }) {
+  return (
+    <article className="step-card">
+      <span>{num}</span>
+      <h4>{title}</h4>
+      <p>{text}</p>
+    </article>
+  );
+}
+
+function MetricCard({ label, value }) {
+  return (
+    <article className="metric-card">
+      <strong>{value}</strong>
+      <span>{label}</span>
+    </article>
+  );
+}
+
+function DreamBuilder() {
+  const [tierSlug, setTierSlug] = useState("intermediate");
+  const [selected, setSelected] = useState(["booking", "seo"]);
+  const [activeAddon, setActiveAddon] = useState("booking");
+  const [hosting, setHosting] = useState("managed");
+  const tier = tiers[tierSlug];
+
+  const selectedAddOns = useMemo(() => addOns.filter((item) => selected.includes(item.key)), [selected]);
+  const buildTotal = useMemo(() => {
+    return tier.basePrice + selectedAddOns.reduce((sum, item) => sum + item.price, 0);
+  }, [tier.basePrice, selectedAddOns]);
+  const hostingMonthly = hostingOptions[hosting].monthly;
+
+  const toggleAddon = (key) => {
+    setSelected((current) => {
+      const exists = current.includes(key);
+      const next = exists ? current.filter((item) => item !== key) : [...current, key];
+      if (!exists) setActiveAddon(key);
+      if (exists && activeAddon === key) setActiveAddon(next[0] || "");
+      return next;
+    });
+  };
+
+  const selectedText = selectedAddOns.map((item) => item.name).join(", ");
+  const quoteHref = `mailto:${ownerEmail}?subject=${encodeURIComponent("Dream website quote request")}&body=${encodeURIComponent(
+    `Tier: ${tier.name}\nEstimated starting build price: $${buildTotal.toLocaleString()}+\nHosting preference: ${hostingOptions[hosting].label}${hostingMonthly ? ` - $${hostingMonthly}/mo starting support` : ""}\nSelected add-ons: ${selectedText || "None"}\n\nBusiness details:\n`
+  )}`;
+
+  return (
+    <section className="builder-page">
+      <div className="builder-layout">
+        <aside className="builder-panel">
+          <a className="back-link" href="/">Back to packages</a>
+          <h1>Build your dream website.</h1>
+          <p>Choose a base website, add business features, pick hosting, review the estimate, and request a quote.</p>
+
+          <BuilderStep number="1" title="Choose base website">
+            <div className="tier-picker">
+              {tierOrder.map((item) => (
+                <button type="button" key={item.slug} className={tierSlug === item.slug ? "active" : ""} onClick={() => setTierSlug(item.slug)}>
+                  <strong>{item.name}</strong>
+                  <span>{item.label}</span>
+                  <em>{item.priceText}</em>
+                </button>
+              ))}
+            </div>
+          </BuilderStep>
+
+          <BuilderStep number="2" title="Add business features">
+            <div className="addon-picker">
+              {addOns.map((addon) => {
+                const Icon = addon.icon;
+                const active = selected.includes(addon.key);
+                const focused = activeAddon === addon.key;
+                return (
+                  <button
+                    type="button"
+                    key={addon.key}
+                    className={`${active ? "active" : ""} ${focused ? "focused" : ""}`}
+                    onClick={() => {
+                      toggleAddon(addon.key);
+                      setActiveAddon(addon.key);
+                    }}
+                  >
+                    <span><Icon size={18} /></span>
+                    <div>
+                      <strong>{addon.name}</strong>
+                      <small>+${addon.price.toLocaleString()}{addon.name.includes("*") ? "*" : ""}</small>
+                      <p>{addon.business}</p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </BuilderStep>
+
+          <BuilderStep number="3" title="Choose hosting preference">
+            <div className="hosting-toggle">
+              {Object.entries(hostingOptions).map(([key, option]) => (
+                <button type="button" key={key} className={hosting === key ? "active" : ""} onClick={() => setHosting(key)}>
+                  <strong>{option.short}</strong>
+                  <span>{option.monthly ? `$${option.monthly}/mo starting` : "No monthly hosting fee"}</span>
+                </button>
+              ))}
+            </div>
+          </BuilderStep>
+        </aside>
+
+        <main className="builder-stage">
+          <div className="quote-bar">
+            <div>
+              <span>Estimated starting build price</span>
+              <strong>${buildTotal.toLocaleString()}+</strong>
+            </div>
+            <p>{hostingMonthly ? `Managed hosting starts around $${hostingMonthly}/mo after launch.` : "Self-hosted handoff has no monthly service fee from LaunchLine Studio."}</p>
+          </div>
+
+          <WebsitePreview tier={tier} selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon} hosting={hosting} />
+          <AddonDemo key={activeAddon || "empty"} addonKey={activeAddon} selected={selected} tier={tier} />
+
+          <div className="builder-disclaimer">
+            <strong>Estimated starting price only.</strong>
+            <p>Final pricing depends on exact scope, number of pages, content readiness, custom workflows, third-party integrations, revisions, and development time.</p>
+            <p>Items marked with an asterisk may require a custom quote because pricing depends on the complexity of the request.</p>
+            <div className="asterisk-list">
+              <span>Custom Integrations*</span>
+              <span>Advanced Automation*</span>
+              <span>Complex Dashboards*</span>
+              <span>Large Content Migration*</span>
+            </div>
+          </div>
+
+          <div className="builder-request">
+            <div>
+              <h2>Step 5: Request quote</h2>
+              <p>Send the selected package and add-ons so the final scope can be reviewed.</p>
+            </div>
+            <a className="btn primary" href={quoteHref}>Request This Website Quote <ArrowRight size={18} /></a>
+          </div>
+        </main>
+      </div>
+    </section>
+  );
+}
+
+function BuilderStep({ number, title, children }) {
+  return (
+    <section className="builder-step">
+      <h2><span>{number}</span>{title}</h2>
+      {children}
+    </section>
+  );
+}
+
+function WebsitePreview({ tier, selected, activeAddon, setActiveAddon, hosting }) {
+  if (tier.slug === "beginner") {
+    return <BeginnerBuilderPreview tier={tier} selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon} hosting={hosting} />;
+  }
+  if (tier.slug === "intermediate") {
+    return <IntermediateBuilderPreview tier={tier} selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon} hosting={hosting} />;
+  }
+  return <ProBuilderPreview tier={tier} selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon} hosting={hosting} />;
+}
+
+function PreviewShell({ tier, selected, activeAddon, setActiveAddon, hosting, children }) {
+  return (
+    <section className={`live-preview ${tier.slug}-preview`}>
+      <header className="live-preview-head">
+        <div>
+          <span>{tier.name} live preview</span>
+          <strong>{tier.sampleBusiness}</strong>
+        </div>
+        <HostingBadge hosting={hosting} />
+      </header>
+      <div className="preview-tabs">
+        {selected.length ? selected.map((key) => {
+          const addon = addOns.find((item) => item.key === key);
+          if (!addon) return null;
+          const Icon = addon.icon;
+          return (
+            <button type="button" key={key} className={activeAddon === key ? "active" : ""} onClick={() => setActiveAddon(key)}>
+              <Icon size={15} /> {addon.shortName}
+            </button>
+          );
+        }) : <span>No add-ons selected</span>}
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function BeginnerBuilderPreview({ tier, selected, activeAddon, setActiveAddon, hosting }) {
+  return (
+    <PreviewShell tier={tier} selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon} hosting={hosting}>
+      <div className="preview-site beginner-live">
+        <nav><strong>Spark & Shine</strong><span>Home</span><span>Services</span><span>Reviews</span><span>FAQ</span><span>Contact</span></nav>
+        <section className="preview-hero">
+          <p>Mobile detailing</p>
+          <h3>Professional one-page site with a direct path to contact.</h3>
+          <button>{selected.includes("booking") ? "Schedule Appointment" : selected.includes("payments") ? "Pay Deposit" : "Call Today"}</button>
+        </section>
+        <div className="preview-content-grid">
+          <ImpactCard title="Services" text="Wash, interior refresh, full detail." />
+          <ImpactCard title="Reviews" text="Short trust-building testimonials." />
+          <ImpactCard title="FAQ" text="Answers before visitors call." />
+          <ImpactCard title="Contact" text="Phone number and simple form." />
+        </div>
+        <SelectedImpacts tier={tier} selected={selected} activeAddon={activeAddon} />
+      </div>
+    </PreviewShell>
+  );
+}
+
+function IntermediateBuilderPreview({ tier, selected, activeAddon, setActiveAddon, hosting }) {
+  return (
+    <PreviewShell tier={tier} selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon} hosting={hosting}>
+      <div className="preview-site intermediate-live">
+        <nav><strong>Iron Ridge</strong><span>Home</span><span>Services</span><span>Gallery</span><span>Reviews</span><span>Contact</span>{selected.includes("booking") && <span>Booking</span>}</nav>
+        <div className="multipage-preview">
+          <aside>
+            <strong>Pages</strong>
+            <span className="active">Services</span>
+            <span>Gallery</span>
+            <span>Process</span>
+            <span>FAQ</span>
+            {selected.includes("seo") && <span>Location Pages</span>}
+            {selected.includes("database") && <span>Submitted Leads</span>}
+          </aside>
+          <main>
+            <section className="preview-hero">
+              <p>Multi-page business site</p>
+              <h3>Service pages, project proof, and stronger quote flow.</h3>
+              <button>{selected.includes("booking") ? "Book Estimate" : "Request Quote"}</button>
+            </section>
+            <div className="preview-content-grid">
+              <ImpactCard title="Roof Repair" text="Dedicated service page." />
+              <ImpactCard title="Project Gallery" text="Before and after proof." />
+              <ImpactCard title="Testimonials" text="Local trust signals." />
+              <ImpactCard title="Lead Form" text="Better project details." />
+            </div>
+          </main>
+        </div>
+        <SelectedImpacts tier={tier} selected={selected} activeAddon={activeAddon} />
+      </div>
+    </PreviewShell>
+  );
+}
+
+function ProBuilderPreview({ tier, selected, activeAddon, setActiveAddon, hosting }) {
+  return (
+    <PreviewShell tier={tier} selected={selected} activeAddon={activeAddon} setActiveAddon={setActiveAddon} hosting={hosting}>
+      <div className="preview-app">
+        <aside>
+          <strong>Apex Portal</strong>
+          <button type="button" className={selected.includes("portal") ? "active" : ""} onClick={() => setActiveAddon("portal")}><UserRound size={15} /> Customer Portal</button>
+          <button type="button" className={selected.includes("booking") ? "active" : ""} onClick={() => setActiveAddon("booking")}><CalendarDays size={15} /> Requests</button>
+          <button type="button" className={selected.includes("payments") ? "active" : ""} onClick={() => setActiveAddon("payments")}><WalletCards size={15} /> Payments</button>
+          <button type="button" className={selected.includes("uploads") ? "active" : ""} onClick={() => setActiveAddon("uploads")}><UploadCloud size={15} /> Uploads</button>
+          <button type="button" className={selected.includes("admin") ? "active" : ""} onClick={() => setActiveAddon("admin")}><LayoutDashboard size={15} /> Admin</button>
+        </aside>
+        <main>
+          <div className="metric-row">
+            <button type="button" onClick={() => setActiveAddon("database")} className={selected.includes("database") ? "active" : ""}><strong>128</strong><span>Records</span></button>
+            <button type="button" onClick={() => setActiveAddon("payments")} className={selected.includes("payments") ? "active" : ""}><strong>$8.4k</strong><span>Payments</span></button>
+            <button type="button" onClick={() => setActiveAddon("notifications")} className={selected.includes("notifications") ? "active" : ""}><strong>7</strong><span>Alerts</span></button>
+          </div>
+          <div className="app-workflow-grid">
+            <ImpactCard title="Customer request" text={selected.includes("booking") ? "Scheduled and assigned." : "Ready for booking add-on."} active={activeAddon === "booking"} />
+            <ImpactCard title="Quote payment" text={selected.includes("payments") ? "Deposit collected." : "Ready for payment add-on."} active={activeAddon === "payments"} />
+            <ImpactCard title="Upload review" text={selected.includes("uploads") ? "Files waiting for approval." : "Ready for upload add-on."} active={activeAddon === "uploads"} />
+            <ImpactCard title="Admin action" text={selected.includes("admin") ? "Status updated by staff." : "Ready for admin dashboard."} active={activeAddon === "admin"} />
+          </div>
+        </main>
+      </div>
+      <SelectedImpacts tier={tier} selected={selected} activeAddon={activeAddon} />
+    </PreviewShell>
+  );
+}
+
+function SelectedImpacts({ tier, selected, activeAddon }) {
+  if (!selected.length) {
+    return (
+      <div className="impact-strip">
+        <ImpactCard title="Base package" text={tier.promise} active />
+      </div>
+    );
+  }
+
+  return (
+    <div className="impact-strip">
+      {selected.map((key) => {
+        const addon = addOns.find((item) => item.key === key);
+        if (!addon) return null;
+        const Icon = addon.icon;
+        return (
+          <article className={`impact-card ${activeAddon === key ? "active" : ""}`} key={key}>
+            <Icon size={18} />
+            <h4>{addon.shortName}</h4>
+            <p>{addon.effects[tier.slug]}</p>
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
+function ImpactCard({ title, text, active = false }) {
+  return (
+    <article className={`impact-card ${active ? "active" : ""}`}>
+      <h4>{title}</h4>
+      <p>{text}</p>
+    </article>
+  );
+}
+
+function HostingBadge({ hosting }) {
+  return (
+    <span className="hosting-badge">
+      {hosting === "managed" ? <Server size={16} /> : <FileText size={16} />}
+      {hostingOptions[hosting].short}
+    </span>
+  );
+}
+
+function AddonDemo({ addonKey, selected, tier }) {
+  const [step, setStep] = useState(0);
+  const addon = addOns.find((item) => item.key === addonKey);
+
+  if (!addon || !selected.includes(addonKey)) {
+    return (
+      <section className="addon-demo empty">
+        <h2>Add-on demo</h2>
+        <p>Select any business feature to see a plain-English explanation, technical scope, mini demo, price, and preview change.</p>
+      </section>
+    );
+  }
+
+  const Icon = addon.icon;
+
+  return (
+    <section className="addon-demo">
+      <div className="addon-demo-head">
+        <span><Icon size={24} /></span>
+        <div>
+          <h2>{addon.name}</h2>
+          <p>{addon.business}</p>
+          <small>Starting add-on price: +${addon.price.toLocaleString()}{addon.name.includes("*") ? "*" : ""}</small>
+        </div>
+      </div>
+      <div className="demo-grid">
+        <div className="demo-screen">
+          <Icon size={32} />
+          <strong>{addon.steps[step]}</strong>
+          <p>{addon.effects[tier.slug]}</p>
+        </div>
+        <div className="demo-steps">
+          {addon.steps.map((item, index) => (
+            <button type="button" key={item} className={step === index ? "active" : ""} onClick={() => setStep(index)}>
+              <span>{index + 1}</span>{item}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="technical-note">
+        <strong>Technical scope</strong>
+        <p>{addon.technical}</p>
       </div>
     </section>
   );
@@ -956,7 +1529,7 @@ function Footer() {
   return (
     <footer className="footer">
       <a className="brand" href="/"><span className="brand-mark"><Code2 size={20} /></span><span><strong>LaunchLine</strong><small>Studio</small></span></a>
-      <p>Professional website packages, interactive demos, and clear project scopes for growing businesses.</p>
+      <p>Professional websites, business sites, and custom platforms with clear scope, demos, and support options.</p>
     </footer>
   );
 }
