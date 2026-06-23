@@ -1,26 +1,22 @@
-# LaunchLine Websites — Template Showcase
+# LaunchLine Websites — Final Sales Showcase
 
-A Railway-ready React/Vite sales site for showcasing three website options:
+Railway-ready React/Vite site for selling website packages.
 
-- Beginner
-- Intermediate
-- Pro
+## Includes
 
-This is built to act as the main sales page when pitching websites to businesses.
+- Beginner, Intermediate, and Pro website tiers
+- Expanded tier explanations
+- Live quote builder with feature-based pricing
+- Asterisk disclaimers for custom pricing and scope changes
+- Visual sample website previews for each tier
+- Custom website feature options
+- Managed hosting and maintenance section
+- Self-hosted handoff explanation
+- Future update / bug fix policy explanation
+- Portfolio proof using Goodman Pickleball and Big Papa Joe Septic
+- Railway `vite.config.js` allowed host fix
 
-## Fixed Railway blocked-host issue
-
-This project includes `vite.config.js` with:
-
-```js
-preview.allowedHosts = [
-  "webdev-production-e888.up.railway.app",
-  ".up.railway.app",
-  ".railway.app"
-]
-```
-
-## Local run
+## Run locally
 
 ```bash
 npm install
@@ -35,25 +31,18 @@ npm run build
 
 ## Railway
 
-Railway should use `railway.toml` automatically.
+Railway should use `railway.toml`.
 
 ```txt
 Build Command: npm run build
 Start Command: npm start
 ```
 
-## Customize
+## Edit
 
-Primary files:
+Most content is in:
 
 ```txt
 src/main.jsx
 src/styles.css
 ```
-
-Update:
-- Brand name
-- Contact email
-- Package prices
-- Portfolio links
-- Screenshots/examples
