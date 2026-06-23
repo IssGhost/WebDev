@@ -35,3 +35,12 @@ npm run build
 Build Command: npm run build
 Start Command: npm start
 ```
+
+
+## Build fix
+
+This package removes the duplicate `InfoBlock` component declaration that caused the Railway build error:
+
+```txt
+ERROR: The symbol "InfoBlock" has already been declared
+```

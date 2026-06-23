@@ -899,9 +899,6 @@ function RecordsDemo({ step, setStep }) {
   );
 }
 
-function InfoBlock({ title, metric }) {
-  return <div className="info-block"><span /><strong>{metric || title}</strong><small>{metric ? title : "Preview section"}</small></div>;
-}
 
 function WorkShowcase() {
   return (
