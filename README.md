@@ -31,3 +31,18 @@ npm run build
 Build Command: npm run build
 Start Command: npm start
 ```
+
+
+## Mobile responsiveness
+
+This version includes extra mobile scaling and layout polish for:
+
+- iPhone-sized screens
+- small Android screens
+- tablets
+- Railway preview windows
+- stacked tier pages
+- stacked builder controls
+- touch-friendly buttons
+- iPhone input zoom prevention
+- responsive demo previews
