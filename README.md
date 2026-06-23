@@ -1,22 +1,31 @@
-# LaunchLine Studio — Interactive Website Sales Hub
+# LaunchLine Studio — Final Distribution Build
 
-Railway-ready React/Vite website sales hub.
+This is the refined, sales-ready website package showcase.
 
-## What this version adds
+## Included
 
-- Unique UI direction that does not look like the pickleball website
-- Full demo routes for each tier:
+- Professional light agency UI, no neon/cyber styling.
+- Homepage sales funnel.
+- Full tier demo pages:
   - `/beginner`
   - `/intermediate`
   - `/pro`
-- Interactive `/builder` page
-- Add-ons are now "implemented" into the preview with clickable demos, not just added as blocks
-- Clear visual differences between Beginner, Intermediate, and Pro
-- Mobile scaling and touch-friendly layouts
-- Managed hosting vs file handoff terms
-- Railway allowed-host fix
+- Full-screen immersive Dream Builder:
+  - `/builder`
+- Clickable add-on demos that explain why each feature matters.
+- Tier-specific preview behavior:
+  - Beginner = one-page credibility site
+  - Intermediate = multi-page lead generation site
+  - Pro = web app / dashboard / workflow platform
+- Real-time quote estimate with asterisk disclaimers.
+- Managed hosting and maintenance section.
+- Self-hosted file handoff section.
+- Future work / bug fix / enhancement policy.
+- Portfolio proof for Goodman Pickleball and Big Papa Joe Septic.
+- Mobile responsive layout.
+- Railway allowed-host fix.
 
-## Run
+## Run locally
 
 ```bash
 npm install
@@ -31,16 +40,9 @@ npm run build
 
 ## Railway
 
+Railway should use `railway.toml`.
+
 ```txt
 Build Command: npm run build
 Start Command: npm start
-```
-
-
-## Build fix
-
-This package removes the duplicate `InfoBlock` component declaration that caused the Railway build error:
-
-```txt
-ERROR: The symbol "InfoBlock" has already been declared
 ```
