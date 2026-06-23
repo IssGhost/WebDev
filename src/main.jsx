@@ -303,12 +303,108 @@ const packageComparison = [
   ["Pro", "Business system", "Portals, dashboards, payments, records, uploads, and workflows."]
 ];
 
+const wordpressStyleCards = [
+  {
+    title: "Modern Product / Tech",
+    bestFor: "Tech companies, product launches, SaaS, EV, AI tools, apps, and startups.",
+    style: "Dark premium sections, sleek product hero, feature cards, glowing accents, service breakdowns, stats, and high-end motion.",
+    icon: Rocket,
+    features: ["Product hero section", "Feature cards", "Service diagrams", "Stats section", "Scroll animations", "Strong CTA panels"]
+  },
+  {
+    title: "Bold Event / Registration",
+    bestFor: "Events, races, tournaments, festivals, fundraisers, concerts, nightlife, and sports events.",
+    style: "Colorful, energetic, countdown-driven, registration-focused, photo-heavy, and built around bold typography.",
+    icon: CalendarDays,
+    features: ["Countdown timer", "Event location cards", "Registration CTA", "Photo collage", "Sponsor section", "FAQ and schedule sections"]
+  },
+  {
+    title: "Professional Service / Local Business",
+    bestFor: "Insurance, contractors, septic, law, real estate, consulting, med spas, and home services.",
+    style: "Clean, trustworthy, conversion-focused, review-heavy, and quote-request driven.",
+    icon: ShieldCheck,
+    features: ["Trust-focused hero", "Service cards", "Quote form", "Reviews", "Service-area section", "Strong CTA buttons"]
+  },
+  {
+    title: "Luxury / Premium Brand",
+    bestFor: "Med spas, real estate, consultants, personal brands, high-ticket services, and boutique businesses.",
+    style: "Elegant spacing, premium typography, refined colors, high-quality visuals, and polished testimonials.",
+    icon: Crown,
+    features: ["Luxury hero section", "Premium service cards", "Case study blocks", "Review carousel", "Visual storytelling", "Consultation CTA"]
+  },
+  {
+    title: "Photo-Heavy Portfolio",
+    bestFor: "Photographers, contractors, remodelers, landscapers, restaurants, salons, fitness, and events.",
+    style: "Visual-first layout focused on images, results, before/after work, and project galleries.",
+    icon: Image,
+    features: ["Portfolio gallery", "Before/after sections", "Photo collage", "Project detail cards", "Featured work", "Image-focused CTA sections"]
+  },
+  {
+    title: "High-Converting Landing Page",
+    bestFor: "Paid ads, single services, product offers, coaching offers, and launch campaigns.",
+    style: "A focused one-page funnel built around one primary action.",
+    icon: MousePointerClick,
+    features: ["Strong hero", "Offer breakdown", "Benefits section", "Proof/testimonials", "Urgency section", "Lead form or checkout CTA"]
+  }
+];
+
+const visualAddOns = [
+  ["Custom Hero Section", "A custom top section designed around your brand, main offer, imagery, and strongest call-to-action.", Paintbrush],
+  ["Premium Animations", "Smooth scroll effects, hover movement, section reveals, and subtle transitions that make the site feel more modern without overwhelming visitors.", Sparkles],
+  ["Brand-Matched Color System", "Colors, buttons, cards, backgrounds, and section styles matched to the personality of your business.", BadgeCheck],
+  ["Photo Gallery / Portfolio Layout", "A visual layout for showing real work, events, products, before/after photos, or completed projects.", Image],
+  ["Countdown Timer", "Great for events, launches, registrations, limited-time offers, and campaigns.", CalendarDays],
+  ["Interactive Service Cards", "Clickable or expandable service cards that help customers understand what you offer without cluttering the page.", MousePointerClick],
+  ["Before & After Showcase", "Useful for contractors, cleaning, med spas, detailing, landscaping, fitness, and any business that benefits from showing results.", FolderKanban],
+  ["Video Background / Promo Section", "A video area or promo section that helps explain the brand, product, service, or event quickly.", PlayGraphic],
+  ["Testimonials Carousel", "A polished rotating testimonial section to build trust and social proof.", MessageSquareText],
+  ["Custom Icons / Graphics", "Simple custom graphics or icons to make the website feel less generic.", Code2],
+  ["Landing Page Conversion Upgrade", "A more strategic layout designed to drive calls, bookings, registrations, quote requests, or purchases.", BarChart3]
+];
+
+const customizationLevels = [
+  ["Clean", "Simple, professional, and straightforward. Best for clients who want a polished site without extra visual complexity."],
+  ["Modern", "More polished visuals, stronger spacing, improved cards, better imagery, and subtle motion."],
+  ["Premium", "Custom hero, stronger brand styling, animations, visual storytelling, testimonials, and more unique page sections."],
+  ["High-Impact", "Bold typography, custom visuals, event-style sections, countdowns, photo-heavy layouts, motion, and conversion-focused call-to-action areas."]
+];
+
+const customizationComparison = [
+  ["Colors", "Clean standard palette", "Brand-matched color system"],
+  ["Layout", "Professional section layout", "Custom section shapes and page structure"],
+  ["Hero", "Standard headline and CTA", "Custom visual hero section"],
+  ["Images", "Basic image placement", "Photo collage, gallery, or portfolio layout"],
+  ["Motion", "Minimal", "Scroll effects, hover animations, section reveals"],
+  ["Services", "Simple service cards", "Interactive service cards"],
+  ["Social Proof", "Static testimonials", "Testimonial carousel or styled proof section"],
+  ["Conversion", "Basic CTA buttons", "High-converting CTA sections and landing flow"]
+];
+
+const businessFitExamples = [
+  "A contractor may need quote requests, service pages, and before/after galleries.",
+  "An event may need countdowns, registration buttons, bold visuals, and location cards.",
+  "A tech company may need a sleek product showcase and feature breakdown.",
+  "A coaching business may need bookings, payments, and client uploads.",
+  "A professional service may need trust, reviews, and a strong contact flow."
+];
+
+const ultraDemoTabs = [
+  { key: "tech", label: "Modern Tech / Product", business: "VoltEdge EV Charging" },
+  { key: "event", label: "Bold Event / Registration", business: "NovaPulse Color Run" },
+  { key: "service", label: "Professional Service / Local Business", business: "Barrow & Co. Insurance Group" }
+];
+
+function PlayGraphic(props) {
+  return <Zap {...props} />;
+}
+
 function App() {
   const route = window.location.pathname.replace(/^\/+/, "").toLowerCase() || "home";
 
   if (route === "beginner") return <Shell><BeginnerPage /></Shell>;
   if (route === "intermediate") return <Shell><IntermediatePage /></Shell>;
   if (route === "pro") return <Shell><ProPage /></Shell>;
+  if (route === "wordpress-sites" || route === "wordpress") return <Shell><WordPressSitesPage /></Shell>;
   if (route === "builder" || route === "build-your-dream-website") return <Shell compactFooter><DreamBuilder /></Shell>;
 
   return (
@@ -344,6 +440,7 @@ function Nav() {
           <a href="/intermediate">Intermediate</a>
           <a href="/pro">Pro</a>
           <a href="/builder">Builder</a>
+          <a href="/wordpress-sites">WordPress Sites</a>
           <a href="/#contact">Contact</a>
         </div>
 
@@ -499,6 +596,7 @@ function BuilderCallout() {
           <p>
             The builder shows how booking, payments, portals, admin tools, uploads, notifications, SEO pages, saved records, and integrations change the website experience.
           </p>
+          <a className="inline-custom-link" href="/wordpress-sites">Want a more visually custom WordPress-style design? View WordPress Sites.</a>
         </div>
         <a className="btn primary" href="/builder">Open Builder <ArrowRight size={18} /></a>
       </div>
@@ -1174,6 +1272,500 @@ function MetricCard({ label, value }) {
   );
 }
 
+function customDesignQuoteHref(context = "Custom WordPress-style website") {
+  return `mailto:${ownerEmail}?subject=${encodeURIComponent("Custom WordPress-Style Website Request")}&body=${encodeURIComponent(`Project interest: ${context}\n\nBusiness name:\nWebsite style:\nPages or sections needed:\nPreferred launch timeline:\n`)}`;
+}
+
+function WordPressSitesPage() {
+  return (
+    <>
+      <section className="wordpress-hero">
+        <div className="section wordpress-hero-grid">
+          <div>
+            <p className="eyebrow"><Paintbrush size={16} /> WordPress-style custom websites</p>
+            <h1>WordPress-Style Custom Websites</h1>
+            <p className="hero-text">
+              Some businesses need more than a clean website - they need a site with a bold visual style, custom sections, motion, brand personality, and a layout that feels built specifically for their industry.
+            </p>
+            <p className="wordpress-hero-copy">
+              This option is for clients who want a more customized, modern, WordPress-style website experience with premium visuals, custom layouts, photo-heavy sections, animated elements, and brand-focused design. The site can still be built with React/Vite unless the client specifically wants WordPress or a WordPress-compatible handoff.
+            </p>
+            <div className="hero-actions">
+              <a className="btn primary" href="#website-styles">Explore Website Styles <ArrowRight size={18} /></a>
+              <a className="btn secondary" href={customDesignQuoteHref("Custom visual website design")}>Request Custom Design Quote</a>
+            </div>
+          </div>
+          <div className="wordpress-hero-preview" aria-label="Custom website preview">
+            <div className="custom-preview-nav">
+              <strong>Premium Brand Site</strong>
+              <span>Story</span>
+              <span>Proof</span>
+              <span>Book</span>
+            </div>
+            <div className="custom-preview-hero">
+              <span>Brand-heavy landing experience</span>
+              <strong>Custom visuals, stronger personality, and conversion-focused sections.</strong>
+              <div className="custom-preview-actions">
+                <button type="button">Start project</button>
+                <button type="button">View work</button>
+              </div>
+            </div>
+            <div className="custom-preview-grid">
+              <span>Hero motion</span>
+              <span>Photo collage</span>
+              <span>Trust proof</span>
+              <span>Final CTA</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <WebsiteStyleChoices />
+      <UltraCustomWordPressDemo />
+      <VisualCustomizationAddOns />
+      <CustomizationLevelSection />
+      <CustomizationComparisonSection />
+      <BusinessFitSection />
+      <PricingNoteSection />
+    </>
+  );
+}
+
+function WebsiteStyleChoices() {
+  return (
+    <section id="website-styles" className="section">
+      <div className="section-head">
+        <div>
+          <p className="eyebrow small">Choose Your Website Style</p>
+          <h2>Custom visual direction for businesses that need more brand personality.</h2>
+        </div>
+        <p>
+          These styles can be used for React/Vite builds, WordPress-compatible builds if requested, or custom modern website designs that feel closer to premium theme work.
+        </p>
+      </div>
+      <div className="wordpress-style-grid">
+        {wordpressStyleCards.map((style) => {
+          const Icon = style.icon;
+          return (
+            <article className="wordpress-style-card" key={style.title}>
+              <span className="icon-box"><Icon size={22} /></span>
+              <h3>{style.title}</h3>
+              <p><strong>Best for:</strong> {style.bestFor}</p>
+              <p><strong>Style:</strong> {style.style}</p>
+              <div className="mini-feature-list">
+                {style.features.map((feature) => <span key={feature}>{feature}</span>)}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function UltraCustomWordPressDemo() {
+  const [active, setActive] = useState("tech");
+  const selected = ultraDemoTabs.find((tab) => tab.key === active) || ultraDemoTabs[0];
+
+  return (
+    <section className="section ultra-demo-section">
+      <div className="section-head">
+        <div>
+          <p className="eyebrow small">Ultra-Custom WordPress-Style Demo</p>
+          <h2>Clickable style previews show how premium visual design changes the feel of a website.</h2>
+        </div>
+        <p>
+          This is what a more custom, premium, WordPress-style website could feel like compared to a standard business website.
+        </p>
+      </div>
+
+      <div className="ultra-tab-row">
+        {ultraDemoTabs.map((tab) => (
+          <button type="button" key={tab.key} className={active === tab.key ? "active" : ""} onClick={() => setActive(tab.key)}>
+            <strong>{tab.label}</strong>
+            <span>{tab.business}</span>
+          </button>
+        ))}
+      </div>
+
+      <div className="ultra-demo-shell">
+        {selected.key === "tech" && <VoltEdgeDemo />}
+        {selected.key === "event" && <NovaPulseDemo />}
+        {selected.key === "service" && <BarrowDemo />}
+      </div>
+
+      <div className="ultra-demo-note">
+        <p>
+          Ultra-custom designs may require additional design and development time because the layout, sections, visuals, animations, and brand styling are created specifically for the business instead of using a standard structure.
+        </p>
+        <div className="hero-actions">
+          <a className="btn primary" href={customDesignQuoteHref(selected.business)}>Request Custom WordPress-Style Quote</a>
+          <a className="btn secondary" href="/#packages">Compare Standard Packages</a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function VoltEdgeDemo() {
+  return (
+    <article className="ultra-site tech-site">
+      <header className="ultra-site-nav">
+        <strong>VoltEdge EV Charging</strong>
+        <nav><span>Solutions</span><span>Fleet</span><span>Maintenance</span><span>Contact</span></nav>
+        <button type="button">Plan install</button>
+      </header>
+      <section className="ultra-hero tech-hero">
+        <div>
+          <p>Modern Tech / Product</p>
+          <h3>Commercial EV charging built for apartments, offices, and retail centers.</h3>
+          <p>
+            VoltEdge designs, installs, and monitors fleet-ready charging infrastructure for property owners who need reliable equipment and a polished customer experience.
+          </p>
+          <div className="ultra-actions">
+            <button type="button">Schedule site survey</button>
+            <button type="button">View charging plans</button>
+          </div>
+        </div>
+        <div className="tech-product-visual">
+          <div className="charger-tower">
+            <span />
+            <strong>82%</strong>
+            <small>Station availability</small>
+          </div>
+          <div className="charge-card">
+            <b>Fleet-ready infrastructure</b>
+            <span>Load planning, install coordination, monitoring, and maintenance in one managed rollout.</span>
+          </div>
+        </div>
+      </section>
+
+      <div className="ultra-feature-grid">
+        <CustomMiniCard title="Fast commercial charging installs" text="Site survey, utility planning, permitting, install, and launch support." />
+        <CustomMiniCard title="Fleet-ready infrastructure" text="Charging layouts for delivery teams, employee parking, and shared properties." />
+        <CustomMiniCard title="Maintenance and monitoring" text="Ongoing visibility into station uptime, alerts, and service needs." />
+      </div>
+
+      <section className="ultra-split">
+        <div>
+          <p className="sample-kicker">How it works</p>
+          <h4>From first site walk to monitored charging network.</h4>
+        </div>
+        <div className="process-mini">
+          <span>1. Site assessment</span>
+          <span>2. Electrical and utility plan</span>
+          <span>3. Install, activate, and monitor</span>
+        </div>
+      </section>
+
+      <div className="ultra-stats">
+        <span><strong>48</strong> locations planned</span>
+        <span><strong>24/7</strong> station monitoring</span>
+        <span><strong>18%</strong> average energy savings</span>
+      </div>
+
+      <section className="ultra-section">
+        <h4>Services designed for commercial properties.</h4>
+        <div className="ultra-card-row">
+          <CustomMiniCard title="Apartment charging" text="Resident charging stations with clear usage and maintenance planning." />
+          <CustomMiniCard title="Office charging" text="Employee and visitor charging programs for workplace properties." />
+          <CustomMiniCard title="Retail charging" text="Public-facing charging experiences for shopping centers and hospitality." />
+        </div>
+      </section>
+
+      <section className="ultra-proof">
+        <blockquote>"VoltEdge made the rollout feel premium from the first presentation to the launch dashboard."</blockquote>
+        <span>Property Operations Director, Austin retail center</span>
+      </section>
+
+      <FinalDemoCTA title="Ready to electrify your property?" text="Book a site survey and see which charging layout fits your building, budget, and customer experience." button="Start with VoltEdge" />
+    </article>
+  );
+}
+
+function NovaPulseDemo() {
+  return (
+    <article className="ultra-site event-site">
+      <header className="ultra-site-nav event-nav">
+        <strong>NovaPulse Color Run</strong>
+        <nav><span>Cities</span><span>Schedule</span><span>Sponsors</span><span>FAQ</span></nav>
+        <button type="button">Register now</button>
+      </header>
+      <section className="ultra-hero event-hero">
+        <div>
+          <p>Bold Event / Registration</p>
+          <h3>Five color-packed miles, live music, sponsor booths, and race kits built for the whole crew.</h3>
+          <p>
+            NovaPulse turns a standard event page into a high-energy registration funnel with bright visuals, city cards, sponsor proof, and urgent calls to action.
+          </p>
+          <div className="ultra-actions">
+            <button type="button">Register before prices increase</button>
+            <button type="button">View city stops</button>
+          </div>
+        </div>
+        <div className="event-collage">
+          <span>Color blast start line</span>
+          <span>Live DJ stage</span>
+          <span>Runner kit pickup</span>
+          <span>Sponsor village</span>
+        </div>
+      </section>
+
+      <div className="countdown-strip" aria-label="Event countdown">
+        <span><strong>18</strong> days</span>
+        <span><strong>07</strong> hours</span>
+        <span><strong>42</strong> minutes</span>
+        <span><strong>300</strong> early spots left</span>
+      </div>
+
+      <section className="ultra-section">
+        <h4>Event cities</h4>
+        <div className="ultra-card-row city-row">
+          <CustomMiniCard title="Los Angeles" text="Sunset stadium route with food trucks, sponsor booths, and live music." />
+          <CustomMiniCard title="Dallas" text="Downtown color zones, family heats, and charity team registration." />
+          <CustomMiniCard title="Tampa" text="Waterfront course, after-party stage, and color-packed race kits." />
+        </div>
+      </section>
+
+      <section className="ultra-split">
+        <div>
+          <p className="sample-kicker">Race day schedule</p>
+          <h4>Every section helps visitors decide and register faster.</h4>
+        </div>
+        <div className="process-mini event-process">
+          <span>8:00 AM Kit pickup opens</span>
+          <span>9:30 AM Warmup and sponsor giveaways</span>
+          <span>10:00 AM Color run starts</span>
+          <span>12:00 PM Live music and awards</span>
+        </div>
+      </section>
+
+      <section className="sponsor-strip">
+        <span>HydraFuel</span>
+        <span>PulseFM</span>
+        <span>BrightBank</span>
+        <span>StrideLab</span>
+      </section>
+
+      <section className="ultra-section faq-showcase">
+        <h4>Questions before race day</h4>
+        <div className="ultra-card-row">
+          <CustomMiniCard title="What comes in the race kit?" text="Color powder pack, shirt, bib, sponsor coupons, and finish-line medal." />
+          <CustomMiniCard title="Can families register together?" text="Yes. Family heats and group registration make it easy for teams to join." />
+          <CustomMiniCard title="Are sponsor booths open all day?" text="Sponsor booths, food trucks, and live music run from pickup through awards." />
+        </div>
+      </section>
+
+      <FinalDemoCTA title="Register before prices increase." text="Secure your city, race kit, and start time before the next registration tier opens." button="Register now" />
+    </article>
+  );
+}
+
+function BarrowDemo() {
+  return (
+    <article className="ultra-site service-site">
+      <header className="ultra-site-nav service-nav">
+        <strong>Barrow & Co. Insurance Group</strong>
+        <nav><span>Coverage</span><span>Reviews</span><span>Areas</span><span>Quote</span></nav>
+        <button type="button">Request review</button>
+      </header>
+      <section className="ultra-hero service-hero">
+        <div>
+          <p>Professional Service / Local Business</p>
+          <h3>Independent advice for Texas families, drivers, and business owners.</h3>
+          <p>
+            Barrow & Co. shows how a professional local business can feel trustworthy, polished, and conversion-focused with service cards, reviews, badges, FAQs, and a direct quote path.
+          </p>
+          <div className="ultra-actions">
+            <button type="button">Request a coverage review</button>
+            <button type="button">Compare policies</button>
+          </div>
+        </div>
+        <div className="service-quote-card">
+          <ShieldCheck size={28} />
+          <strong>Coverage review</strong>
+          <span>Home, auto, life, and commercial policy options reviewed by an independent local advisor.</span>
+          <button type="button">Start quote</button>
+        </div>
+      </section>
+
+      <section className="ultra-section">
+        <h4>Coverage options with clear next steps.</h4>
+        <div className="ultra-card-row">
+          <CustomMiniCard title="Home insurance" text="Coverage guidance for homeowners, condos, rentals, and personal property." />
+          <CustomMiniCard title="Auto coverage" text="Policy comparisons for families, teen drivers, bundles, and Texas roads." />
+          <CustomMiniCard title="Commercial policies" text="General liability, business property, contractor coverage, and service fleets." />
+        </div>
+      </section>
+
+      <div className="trust-badge-row">
+        <span><BadgeCheck size={17} /> Independent agency</span>
+        <span><Star size={17} /> 4.9 local rating</span>
+        <span><MapPin size={17} /> Serving Central Texas</span>
+      </div>
+
+      <section className="ultra-split">
+        <div>
+          <p className="sample-kicker">Quote request flow</p>
+          <h4>Professional service sites need trust and a frictionless contact path.</h4>
+        </div>
+        <div className="mini-quote-flow">
+          <span>Select coverage type</span>
+          <span>Share current policy</span>
+          <span>Receive advisor review</span>
+        </div>
+      </section>
+
+      <section className="ultra-proof service-proof">
+        <blockquote>"They explained our coverage gaps without pressure and helped us bundle home and auto the same week."</blockquote>
+        <span>Morgan H., Waco homeowner</span>
+      </section>
+
+      <section className="ultra-section">
+        <h4>Helpful answers before a client calls.</h4>
+        <div className="ultra-card-row">
+          <CustomMiniCard title="Do you compare multiple carriers?" text="Yes. Independent advice means policy options can be compared around your actual needs." />
+          <CustomMiniCard title="Can you review my current policy?" text="A coverage review can identify gaps, duplicate coverage, and better bundle options." />
+          <CustomMiniCard title="Which areas do you serve?" text="Barrow & Co. serves families and small businesses across Central Texas." />
+        </div>
+      </section>
+
+      <FinalDemoCTA title="Need a clearer insurance plan?" text="Request a coverage review and get independent guidance for your family or business." button="Contact Barrow & Co." />
+    </article>
+  );
+}
+
+function CustomMiniCard({ title, text }) {
+  return (
+    <article className="custom-mini-card">
+      <h5>{title}</h5>
+      <p>{text}</p>
+    </article>
+  );
+}
+
+function FinalDemoCTA({ title, text, button }) {
+  return (
+    <section className="final-demo-cta">
+      <div>
+        <h4>{title}</h4>
+        <p>{text}</p>
+      </div>
+      <button type="button">{button}</button>
+    </section>
+  );
+}
+
+function VisualCustomizationAddOns() {
+  return (
+    <section className="section">
+      <div className="section-head">
+        <div>
+          <p className="eyebrow small">Visual Customization Add-Ons</p>
+          <h2>Design upgrades that make a site feel less generic.</h2>
+        </div>
+      </div>
+      <div className="visual-addon-grid">
+        {visualAddOns.map(([title, text, Icon]) => (
+          <article className="visual-addon-card" key={title}>
+            <Icon size={22} />
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function CustomizationLevelSection() {
+  return (
+    <section className="section">
+      <div className="section-head">
+        <div>
+          <p className="eyebrow small">Customization Level</p>
+          <h2>Choose how visually custom the website should feel.</h2>
+        </div>
+      </div>
+      <div className="level-grid">
+        {customizationLevels.map(([title, text], index) => (
+          <article className="level-card" key={title}>
+            <span>0{index + 1}</span>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function CustomizationComparisonSection() {
+  return (
+    <section className="section">
+      <div className="section-head">
+        <div>
+          <p className="eyebrow small">Customization Included vs Extra</p>
+          <h2>Standard packages stay clear, while custom visual design adds deeper polish.</h2>
+        </div>
+      </div>
+      <div className="custom-table" role="table" aria-label="Standard website compared with custom WordPress-style website">
+        <div role="row" className="table-head">
+          <span role="columnheader">Feature</span>
+          <span role="columnheader">Standard Website</span>
+          <span role="columnheader">Custom / WordPress-Style Website</span>
+        </div>
+        {customizationComparison.map(([feature, standard, custom]) => (
+          <div role="row" key={feature}>
+            <span role="cell">{feature}</span>
+            <span role="cell">{standard}</span>
+            <span role="cell">{custom}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function BusinessFitSection() {
+  return (
+    <section className="section">
+      <div className="fit-panel">
+        <div>
+          <p className="eyebrow small">What Kind of Website Fits Your Business?</p>
+          <h2>Different businesses need different visual priorities.</h2>
+        </div>
+        <div className="fit-list">
+          {businessFitExamples.map((item) => <span key={item}><Check size={16} />{item}</span>)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PricingNoteSection() {
+  return (
+    <section className="section pricing-note-section">
+      <div className="pricing-note">
+        <div>
+          <p className="eyebrow small">Important Pricing Note</p>
+          <h2>Custom visuals are quoted around the actual design effort.</h2>
+          <p>
+            Custom visual design may increase the project price because it takes additional time to design, revise, test, and polish. Custom animations, unique layouts, premium graphics, large galleries, advanced landing pages, and WordPress-specific requests may require a custom quote.
+          </p>
+          <p>
+            Pricing shown on the main package pages is a starting point. More customized WordPress-style designs, premium visual effects, custom layouts, or advanced brand-focused sections may increase the final quote depending on the time and complexity required.
+          </p>
+        </div>
+        <div className="pricing-actions">
+          <a className="btn primary" href={customDesignQuoteHref("Custom WordPress-style website request")}>Request a Custom Design Quote</a>
+          <a className="btn secondary" href="/#packages">Compare Standard Packages</a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function DreamBuilder() {
   const [tierSlug, setTierSlug] = useState("intermediate");
   const [selected, setSelected] = useState(["booking", "seo"]);
@@ -1248,6 +1840,10 @@ function DreamBuilder() {
                 );
               })}
             </div>
+            <a className="custom-design-link" href="/wordpress-sites">
+              <Sparkles size={18} />
+              <span><strong>Want a more visually custom WordPress-style design?</strong> View WordPress Sites.</span>
+            </a>
           </BuilderStep>
 
           <BuilderStep number="3" title="Choose hosting preference">
