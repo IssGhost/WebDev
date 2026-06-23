@@ -1,16 +1,20 @@
-# LaunchLine Websites — Full Tier Demo Pages
+# LaunchLine Studio — Interactive Website Sales Hub
 
-This project is Railway-ready and includes:
+Railway-ready React/Vite website sales hub.
 
-- Homepage sales funnel
-- Full demo page for Beginner tier
-- Full demo page for Intermediate tier
-- Full demo page for Pro tier
-- Build Your Dream Website interactive builder page
-- Live visual preview changes when add-ons are selected
-- Real-time estimated quote
-- Managed hosting / file handoff explanation
-- Railway allowed host fix
+## What this version adds
+
+- Unique UI direction that does not look like the pickleball website
+- Full demo routes for each tier:
+  - `/beginner`
+  - `/intermediate`
+  - `/pro`
+- Interactive `/builder` page
+- Add-ons are now "implemented" into the preview with clickable demos, not just added as blocks
+- Clear visual differences between Beginner, Intermediate, and Pro
+- Mobile scaling and touch-friendly layouts
+- Managed hosting vs file handoff terms
+- Railway allowed-host fix
 
 ## Run
 
@@ -31,18 +35,3 @@ npm run build
 Build Command: npm run build
 Start Command: npm start
 ```
-
-
-## Mobile responsiveness
-
-This version includes extra mobile scaling and layout polish for:
-
-- iPhone-sized screens
-- small Android screens
-- tablets
-- Railway preview windows
-- stacked tier pages
-- stacked builder controls
-- touch-friendly buttons
-- iPhone input zoom prevention
-- responsive demo previews
